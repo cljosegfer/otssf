@@ -371,7 +371,7 @@ tasks.json
 
 ## CUSTOM
 # Files
-config.lua
+# config.lua
 config_canary.lua
 client_assertions.txt
 .env
