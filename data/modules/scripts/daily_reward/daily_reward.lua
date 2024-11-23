@@ -75,7 +75,8 @@ local DailyRewardItems = {
 
 DailyReward = {
 	testMode = false,
-	serverTimeThreshold = (25 * 60 * 60), -- Counting down 24hours from last server save
+	-- serverTimeThreshold = (25 * 60 * 60), -- Counting down 24hours from last server save
+	serverTimeThreshold = (60), -- Counting down 60s from last server save
 
 	storages = {
 		-- Player
@@ -285,9 +286,9 @@ DailyReward.isRewardTaken = function(playerId)
 		return false
 	end
 	local playerStorage = player:getStorageValue(DailyReward.storages.avoidDouble)
-	if playerStorage == GetDailyRewardLastServerSave() then
-		return true
-	end
+	-- if playerStorage == GetDailyRewardLastServerSave() then
+	-- 	return true
+	-- end
 	return false
 end
 
@@ -312,7 +313,7 @@ DailyReward.init = function(playerId)
 				player:setJokerTokens(player:getJokerTokens() - timeMath)
 				player:sendTextMessage(MESSAGE_LOGIN, "You lost " .. timeMath .. " joker tokens to prevent loosing your streak.")
 			else
-				player:setStreakLevel(0)
+				-- player:setStreakLevel(0)
 				if player:getLastLoginSaved() > 0 then -- message wont appear at first character login
 					player:setJokerTokens(-(player:getJokerTokens()))
 					player:sendTextMessage(MESSAGE_LOGIN, "You just lost your daily reward streak.")
