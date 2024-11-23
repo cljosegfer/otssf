@@ -26,7 +26,7 @@ maintainModeMessage = ""
 -- NOTE: valid values for worldType are: "pvp", "no-pvp" and "pvp-enforced"
 -- NOTE: removeBeginningWeaponAmmunition: spears, arrows, bolt have endless ammo (allows training for paladins)
 -- NOTE: refundManaOnBeginningWeapons: wand of vortex and snakebite refund mana used (allows training for mages)
-worldType = "pvp"
+worldType = "no-pvp" -- n toma dano de self ground effect
 hotkeyAimbotEnabled = true
 protectionLevel = 7
 pzLocked = 60 * 1000
@@ -264,7 +264,7 @@ onlyPremiumAccount = false
 stashMoving = false
 stashItemCount = 5000
 depotChest = 4
-autoLoot = false
+autoLoot = true -- autoloot huge
 autoBank = false
 toggleGoldPouchAllowAnything = false
 toggleGoldPouchQuickLootOnly = false
@@ -273,11 +273,11 @@ toggleTravelsFree = false
 buyAolCommandFee = 0
 buyBlessCommandFee = 0
 teleportPlayerToVocationRoom = true
-toggleReceiveReward = false
+toggleReceiveReward = true -- practice free
 randomMonsterSpawn = false
 lootPouchMaxLimit = 2000
 storeInboxMaxLimit = 2000
-enablePlayerPutItemInAmmoSlot = false
+enablePlayerPutItemInAmmoSlot = true -- free slot
 startStreakLevel = 0
 showLootsInBestiary = false
 minTownIdToBankTransferFromMain = 4
@@ -299,8 +299,8 @@ staminaTrainerGain = 1
 -- Stamina in PZ
 staminaPz = false
 staminaOrangeDelay = 1
-staminaGreenDelay = 5
-staminaPzGain = 1
+staminaGreenDelay = 1 -- regen 1min
+staminaPzGain = 60 -- ganha 1h no delay
 -- Max players allowed on a dummy.
 maxAllowedOnADummy = 1
 
@@ -345,11 +345,11 @@ Setting this to false may pose risks; if a house is abandoned and contains a lar
 -- Periods: daily/weekly/monthly/yearly/never
 -- Base: sqm,rent,sqm+rent
 housePriceRentMultiplier = 0.0
-housePriceEachSQM = 1000
+housePriceEachSQM = 1 -- house free
 houseRentPeriod = "never"
 houseRentRate = 1.0
 houseOwnedByAccount = false
-houseBuyLevel = 100
+houseBuyLevel = 8 -- house free
 housePurchasedShowPrice = false
 houseLoseAfterInactivity = 30 -- days; 0 = never
 onlyInvitedCanMoveHouseItems = true
@@ -496,7 +496,7 @@ rateKillingInTheNameOfPoints = 1
 -- So values which should regenerated less then 1 second or won't will work
 rateHealthRegen = 1.0
 rateHealthRegenSpeed = 1.0
-rateManaRegen = 1.0
+rateManaRegen = 10.0 -- mana regen 10x
 rateManaRegenSpeed = 1.0
 rateSoulRegen = 1.0
 rateSoulRegenSpeed = 1.0
