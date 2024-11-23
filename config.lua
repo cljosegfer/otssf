@@ -496,7 +496,7 @@ rateKillingInTheNameOfPoints = 1
 -- So values which should regenerated less then 1 second or won't will work
 rateHealthRegen = 1.0
 rateHealthRegenSpeed = 1.0
-rateManaRegen = 10.0 -- mana regen 10x
+rateManaRegen = 11.2 -- mana regen hard code scale (magic / 5)
 rateManaRegenSpeed = 1.0
 rateSoulRegen = 1.0
 rateSoulRegenSpeed = 1.0
