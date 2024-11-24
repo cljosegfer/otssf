@@ -269,7 +269,7 @@ autoBank = false
 toggleGoldPouchAllowAnything = false
 toggleGoldPouchQuickLootOnly = false
 toggleServerIsRetroPVP = false
-toggleTravelsFree = false
+toggleTravelsFree = true -- travel free
 buyAolCommandFee = 0
 buyBlessCommandFee = 0
 teleportPlayerToVocationRoom = true
@@ -485,7 +485,7 @@ rateUseStages = false
 lowLevelBonusExp = 50
 rateExp = 1
 rateSkill = 1
-rateLoot = 2 -- more loot
+rateLoot = 1
 rateMagic = 1
 rateSpawn = 1
 
@@ -496,7 +496,7 @@ rateKillingInTheNameOfPoints = 1
 -- So values which should regenerated less then 1 second or won't will work
 rateHealthRegen = 1.0
 rateHealthRegenSpeed = 1.0
-rateManaRegen = 11.2 -- mana regen hard code scale (magic / 5)
+rateManaRegen = 11.4 -- mana regen hard code scale (magic / 5)
 rateManaRegenSpeed = 1.0
 rateSoulRegen = 1.0
 rateSoulRegenSpeed = 1.0
