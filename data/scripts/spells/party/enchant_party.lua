@@ -16,36 +16,37 @@ local spell = Spell("instant")
 function spell.onCastSpell(creature, var, isHotkey)
 	local position = creature:getPosition()
 
-	local party = creature:getParty()
-	if not party then
-		creature:sendCancelMessage("No party members in range.")
-		position:sendMagicEffect(CONST_ME_POFF)
-		return false
-	end
+	-- local party = creature:getParty()
+	-- if not party then
+	-- 	creature:sendCancelMessage("No party members in range.")
+	-- 	position:sendMagicEffect(CONST_ME_POFF)
+	-- 	return false
+	-- end
 
-	local membersList = party:getMembers()
-	membersList[#membersList + 1] = party:getLeader()
-	if membersList == nil or type(membersList) ~= "table" or #membersList <= 1 then
-		creature:sendCancelMessage("No party members in range.")
-		position:sendMagicEffect(CONST_ME_POFF)
-		return false
-	end
+	-- local membersList = party:getMembers()
+	-- membersList[#membersList + 1] = party:getLeader()
+	-- if membersList == nil or type(membersList) ~= "table" or #membersList <= 1 then
+	-- 	creature:sendCancelMessage("No party members in range.")
+	-- 	position:sendMagicEffect(CONST_ME_POFF)
+	-- 	return false
+	-- end
 
-	local affectedList = {}
-	for _, targetPlayer in ipairs(membersList) do
-		if targetPlayer:getPosition():getDistance(position) <= 36 then
-			affectedList[#affectedList + 1] = targetPlayer
-		end
-	end
+	-- local affectedList = {}
+	-- for _, targetPlayer in ipairs(membersList) do
+	-- 	if targetPlayer:getPosition():getDistance(position) <= 36 then
+	-- 		affectedList[#affectedList + 1] = targetPlayer
+	-- 	end
+	-- end
 
-	local tmp = #affectedList
-	if tmp <= 1 then
-		creature:sendCancelMessage("No party members in range.")
-		position:sendMagicEffect(CONST_ME_POFF)
-		return false
-	end
+	-- local tmp = #affectedList
+	-- if tmp <= 1 then
+	-- 	creature:sendCancelMessage("No party members in range.")
+	-- 	position:sendMagicEffect(CONST_ME_POFF)
+	-- 	return false
+	-- end
 
-	local mana = math.ceil((0.9 ^ (tmp - 1) * baseMana) * tmp)
+	-- local mana = math.ceil((0.9 ^ (tmp - 1) * baseMana) * tmp)
+	local mana = math.ceil((0.9 ^ (1 - 1) * baseMana) * 1)
 	if creature:getMana() < mana then
 		creature:sendCancelMessage(RETURNVALUE_NOTENOUGHMANA)
 		position:sendMagicEffect(CONST_ME_POFF)
@@ -61,9 +62,10 @@ function spell.onCastSpell(creature, var, isHotkey)
 	creature:addMana(-(mana - baseMana), false)
 	creature:addManaSpent((mana - baseMana))
 
-	for _, targetPlayer in ipairs(affectedList) do
-		targetPlayer:addCondition(condition)
-	end
+	-- for _, targetPlayer in ipairs(affectedList) do
+	-- 	targetPlayer:addCondition(condition)
+	-- end
+	creature:addCondition(condition)
 
 	return true
 end
