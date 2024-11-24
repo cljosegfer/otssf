@@ -26,7 +26,7 @@ maintainModeMessage = ""
 -- NOTE: valid values for worldType are: "pvp", "no-pvp" and "pvp-enforced"
 -- NOTE: removeBeginningWeaponAmmunition: spears, arrows, bolt have endless ammo (allows training for paladins)
 -- NOTE: refundManaOnBeginningWeapons: wand of vortex and snakebite refund mana used (allows training for mages)
-worldType = "no-pvp" -- n toma dano de self ground effect
+worldType = "pvp" -- n toma dano de self ground effect, mas tbm n da
 hotkeyAimbotEnabled = true
 protectionLevel = 7
 pzLocked = 60 * 1000
@@ -279,7 +279,7 @@ lootPouchMaxLimit = 2000
 storeInboxMaxLimit = 2000
 enablePlayerPutItemInAmmoSlot = true -- free slot
 startStreakLevel = 0
-showLootsInBestiary = false
+showLootsInBestiary = true
 minTownIdToBankTransferFromMain = 4
 enableSupportOutfit = true
 
@@ -485,7 +485,7 @@ rateUseStages = false
 lowLevelBonusExp = 50
 rateExp = 1
 rateSkill = 1
-rateLoot = 1
+rateLoot = 2 -- more loot
 rateMagic = 1
 rateSpawn = 1
 
