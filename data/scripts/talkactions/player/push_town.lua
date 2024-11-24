@@ -24,5 +24,5 @@ function pushTown.onSay(player, words, param)
 end
 
 pushTown:separator(" ")
-pushTown:groupType("gamemaster")
+pushTown:groupType("normal")
 pushTown:register()
