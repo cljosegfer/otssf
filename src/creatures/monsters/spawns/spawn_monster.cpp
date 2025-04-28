@@ -102,7 +102,7 @@ bool SpawnsMonster::loadFromXML(const std::string &filemonstername) {
 				if (spawnTimeAttr) {
 					const auto xmlSpawnTime = pugi::cast<uint32_t>(spawnTimeAttr.value());
 					if (xmlSpawnTime > 0) {
-						scheduleInterval = xmlSpawnTime;
+						// scheduleInterval = xmlSpawnTime;
 					} else {
 						g_logger().warn("Invalid spawntime value '{}' for monster '{}'. Setting to default respawn time: {}", spawnTimeAttr.value(), nameAttribute.value(), scheduleInterval);
 					}
@@ -110,6 +110,7 @@ bool SpawnsMonster::loadFromXML(const std::string &filemonstername) {
 					g_logger().warn("Missing spawntime attribute for monster '{}'. Setting to default respawn time: {}", nameAttribute.value(), scheduleInterval);
 				}
 
+				// g_logger().warn("spawn time is {}", scheduleInterval);
 				spawnMonster->addMonster(nameAttribute.as_string(), pos, dir, scheduleInterval * 1000, weight);
 			}
 		}
