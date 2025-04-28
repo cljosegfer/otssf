@@ -496,7 +496,7 @@ rateKillingInTheNameOfPoints = 1
 -- So values which should regenerated less then 1 second or won't will work
 rateHealthRegen = 1.0
 rateHealthRegenSpeed = 1.0
-rateManaRegen = 11.4 -- mana regen hard code scale (magic / 5)
+rateManaRegen = 1.0
 rateManaRegenSpeed = 1.0
 rateSoulRegen = 1.0
 rateSoulRegenSpeed = 1.0
@@ -523,7 +523,7 @@ bossDefaultTimeToFightAgain = 20 * 60 * 60 -- 20 hours
 bossDefaultTimeToDefeat = 20 * 60 -- 20 minutes
 
 -- Monsters
-defaultRespawnTime = 60
+defaultRespawnTime = 600
 deSpawnRange = 2
 deSpawnRadius = 50
 
