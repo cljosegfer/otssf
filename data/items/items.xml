@@ -7337,12 +7337,12 @@
 		<attribute key="showduration" value="1"/>
 		<attribute key="showAttributes" value="1"/>
 		<attribute key="manaticks" value="6000"/>
-		<attribute key="managain" value="1"/>
+		<attribute key="managain" value="8"/>
 		<attribute key="healthticks" value="6000"/>
 		<attribute key="healthgain" value="2"/>
-		<attribute key="duration" value="1200"/>
+		<attribute key="duration" value="12000"/>
 		<attribute key="transformdeequipto" value="3052"/>
-		<!-- <attribute key="decayTo" value="0"/> -->
+		<attribute key="decayTo" value="0"/>
 		<attribute key="weight" value="80"/>
 		<attribute key="script" value="moveevent">
 			<attribute key="slot" value="ring"/>
