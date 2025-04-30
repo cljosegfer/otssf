@@ -5,7 +5,7 @@ function spell.onCastSpell(creature, variant)
 end
 
 spell:name("Conjure Power Bolt")
-spell:words("exevo con vis")
+spell:words("exevo con min vis")
 spell:group("support")
 spell:vocation("royal paladin;true")
 spell:id(95)

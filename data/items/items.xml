@@ -2067,7 +2067,7 @@
 		<attribute key="elementenergy" value="14"/>
 		<attribute key="maxhitchance" value="91"/>
 		<attribute key="attack" value="14"/>
-		<attribute key="weight" value="70"/>
+		<attribute key="weight" value="0"/>
 		<attribute key="script" value="moveevent;weapon">
 			<attribute key="action" value="removecount"/>
 			<attribute key="level" value="20"/>
@@ -2084,7 +2084,7 @@
 		<attribute key="elementice" value="14"/>
 		<attribute key="maxhitchance" value="91"/>
 		<attribute key="attack" value="14"/>
-		<attribute key="weight" value="70"/>
+		<attribute key="weight" value="0"/>
 		<attribute key="script" value="moveevent;weapon">
 			<attribute key="action" value="removecount"/>
 			<attribute key="level" value="20"/>
@@ -2101,7 +2101,7 @@
 		<attribute key="elementfire" value="14"/>
 		<attribute key="maxhitchance" value="91"/>
 		<attribute key="attack" value="14"/>
-		<attribute key="weight" value="70"/>
+		<attribute key="weight" value="0"/>
 		<attribute key="script" value="moveevent;weapon">
 			<attribute key="action" value="removecount"/>
 			<attribute key="level" value="20"/>
@@ -2174,7 +2174,7 @@
 		<attribute key="elementearth" value="14"/>
 		<attribute key="maxhitchance" value="91"/>
 		<attribute key="attack" value="14"/>
-		<attribute key="weight" value="70"/>
+		<attribute key="weight" value="0"/>
 		<attribute key="script" value="moveevent;weapon">
 			<attribute key="action" value="removecount"/>
 			<attribute key="level" value="20"/>
@@ -10752,7 +10752,7 @@
 		<attribute key="shootType" value="poisonarrow"/>
 		<attribute key="maxhitchance" value="91"/>
 		<attribute key="attack" value="23"/>
-		<attribute key="weight" value="80"/>
+		<attribute key="weight" value="0"/>
 	</item>
 	<item id="3449" article="a" name="burst arrow">
 		<attribute key="primarytype" value="ammunition"/>
@@ -19192,7 +19192,7 @@
 		<attribute key="shootType" value="sniperarrow"/>
 		<attribute key="maxhitchance" value="100"/>
 		<attribute key="attack" value="28"/>
-		<attribute key="weight" value="70"/>
+		<attribute key="weight" value="0"/>
 		<attribute key="script" value="moveevent;weapon">
 			<attribute key="action" value="removecount"/>
 			<attribute key="level" value="20"/>

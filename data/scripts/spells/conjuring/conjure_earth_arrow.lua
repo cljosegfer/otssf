@@ -1,15 +1,15 @@
 local spell = Spell("instant")
 
 function spell.onCastSpell(creature, variant)
-	return creature:conjureItem(0, 3449, 100, CONST_ME_MAGIC_BLUE)
+	return creature:conjureItem(0, 774, 100, CONST_ME_MAGIC_BLUE) -- change arrow id
 end
 
-spell:name("Conjure Explosive Arrow")
-spell:words("exevo con flam")
+spell:name("Conjure Earth Arrow") -- change arrow name
+spell:words("exevo con tera") -- change word
 spell:group("support")
 -- spell:vocation("paladin;true", "royal paladin;true")
-spell:castSound(SOUND_EFFECT_TYPE_SPELL_CONJURE_EXPLOSIVE_ARROW)
-spell:id(49)
+spell:castSound(SOUND_EFFECT_TYPE_SPELL_CONJURE_ARROW)
+-- spell:id(49) -- change spell id
 spell:cooldown(2 * 1000)
 spell:groupCooldown(2 * 1000)
 spell:level(25)

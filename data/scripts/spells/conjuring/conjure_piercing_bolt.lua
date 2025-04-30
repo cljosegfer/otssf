@@ -5,7 +5,7 @@ function spell.onCastSpell(creature, variant)
 end
 
 spell:name("Conjure Piercing Bolt")
-spell:words("exevo con grav")
+spell:words("exevo con min grav")
 spell:group("support")
 spell:vocation("paladin;true", "royal paladin;true")
 spell:id(109)
