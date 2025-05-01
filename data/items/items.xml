@@ -2064,9 +2064,9 @@
 		<attribute key="weaponType" value="ammunition"/>
 		<attribute key="ammotype" value="arrow"/>
 		<attribute key="shootType" value="flasharrow"/>
-		<attribute key="elementenergy" value="14"/>
+		<attribute key="elementenergy" value="25"/>
 		<attribute key="maxhitchance" value="91"/>
-		<attribute key="attack" value="14"/>
+		<attribute key="attack" value="25"/>
 		<attribute key="weight" value="0"/>
 		<attribute key="script" value="moveevent;weapon">
 			<attribute key="action" value="removecount"/>
@@ -2081,9 +2081,9 @@
 		<attribute key="weaponType" value="ammunition"/>
 		<attribute key="ammotype" value="arrow"/>
 		<attribute key="shootType" value="shiverarrow"/>
-		<attribute key="elementice" value="14"/>
+		<attribute key="elementice" value="25"/>
 		<attribute key="maxhitchance" value="91"/>
-		<attribute key="attack" value="14"/>
+		<attribute key="attack" value="25"/>
 		<attribute key="weight" value="0"/>
 		<attribute key="script" value="moveevent;weapon">
 			<attribute key="action" value="removecount"/>
@@ -2098,9 +2098,9 @@
 		<attribute key="weaponType" value="ammunition"/>
 		<attribute key="ammotype" value="arrow"/>
 		<attribute key="shootType" value="flammingarrow"/>
-		<attribute key="elementfire" value="14"/>
+		<attribute key="elementfire" value="25"/>
 		<attribute key="maxhitchance" value="91"/>
-		<attribute key="attack" value="14"/>
+		<attribute key="attack" value="25"/>
 		<attribute key="weight" value="0"/>
 		<attribute key="script" value="moveevent;weapon">
 			<attribute key="action" value="removecount"/>
@@ -2171,9 +2171,9 @@
 		<attribute key="weaponType" value="ammunition"/>
 		<attribute key="ammotype" value="arrow"/>
 		<attribute key="shootType" value="eartharrow"/>
-		<attribute key="elementearth" value="14"/>
+		<attribute key="elementearth" value="25"/>
 		<attribute key="maxhitchance" value="91"/>
-		<attribute key="attack" value="14"/>
+		<attribute key="attack" value="25"/>
 		<attribute key="weight" value="0"/>
 		<attribute key="script" value="moveevent;weapon">
 			<attribute key="action" value="removecount"/>
@@ -7254,7 +7254,7 @@
 		<attribute key="absorbpercentice" value="5"/>
 		<attribute key="absorbpercentholy" value="5"/>
 		<attribute key="absorbpercentdeath" value="5"/>
-		<attribute key="charges" value="50"/>
+		<attribute key="charges" value="5000"/>
 		<attribute key="weight" value="270"/>
 		<attribute key="script" value="moveevent">
 			<attribute key="slot" value="necklace"/>
@@ -7298,7 +7298,7 @@
 		<attribute key="invisible" value="1"/>
 		<attribute key="showduration" value="1"/>
 		<attribute key="showAttributes" value="1"/>
-		<attribute key="duration" value="600"/>
+		<attribute key="duration" value="6000"/>
 		<attribute key="transformdeequipto" value="3049"/>
 		<attribute key="decayTo" value="0"/>
 		<attribute key="weight" value="100"/>
@@ -10738,7 +10738,7 @@
 		<attribute key="shootType" value="arrow"/>
 		<attribute key="maxhitchance" value="91"/>
 		<attribute key="attack" value="25"/>
-		<attribute key="weight" value="70"/>
+		<attribute key="weight" value="0"/>
 		<attribute key="script" value="moveevent;weapon">
 			<attribute key="action" value="removecount"/>
 			<attribute key="weaponType" value="ammo"/>
@@ -10761,7 +10761,7 @@
 		<attribute key="shootType" value="burstarrow"/>
 		<attribute key="maxhitchance" value="100"/>
 		<attribute key="attack" value="27"/>
-		<attribute key="weight" value="90"/>
+		<attribute key="weight" value="0"/>
 	</item>
 	<item id="3450" article="a" name="power bolt">
 		<attribute key="primarytype" value="ammunition"/>
@@ -19191,7 +19191,7 @@
 		<attribute key="ammotype" value="arrow"/>
 		<attribute key="shootType" value="sniperarrow"/>
 		<attribute key="maxhitchance" value="100"/>
-		<attribute key="attack" value="28"/>
+		<attribute key="attack" value="30"/>
 		<attribute key="weight" value="0"/>
 		<attribute key="script" value="moveevent;weapon">
 			<attribute key="action" value="removecount"/>
@@ -19207,8 +19207,8 @@
 		<attribute key="ammotype" value="arrow"/>
 		<attribute key="shootType" value="onyxarrow"/>
 		<attribute key="maxhitchance" value="94"/>
-		<attribute key="attack" value="38"/>
-		<attribute key="weight" value="70"/>
+		<attribute key="attack" value="50"/>
+		<attribute key="weight" value="0"/>
 		<attribute key="script" value="moveevent;weapon">
 			<attribute key="action" value="removecount"/>
 			<attribute key="level" value="40"/>
@@ -32648,7 +32648,7 @@
 		<attribute key="ammotype" value="arrow"/>
 		<attribute key="shootType" value="tarsalarrow"/>
 		<attribute key="maxhitchance" value="94"/>
-		<attribute key="attack" value="33"/>
+		<attribute key="attack" value="40"/>
 		<attribute key="weight" value="70"/>
 		<attribute key="script" value="moveevent;weapon">
 			<attribute key="action" value="removecount"/>
