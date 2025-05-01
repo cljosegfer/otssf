@@ -193,6 +193,24 @@ local function creatureSayCallback(npc, creature, type, message)
 		end
 	end
 
+	-- koshei's amulet
+	if MsgContains(message, "amulet") then
+		npcHandler:say("Me can do unbroken but Big Ben want gold 5000 and Big Ben need a lil' time to make it unbroken. Yes or no??", npc, creature)
+		npcHandler:setTopic(playerId, 10)
+	elseif MsgContains(message, "yes") and npcHandler:getTopic(playerId) == 10 then
+		if player:getItemCount(7528) > 0 and player:getItemCount(7529) > 0 and player:getItemCount(7530) > 0 and player:getItemCount(7531) > 0 then
+			player:removeItem(7528, 1)
+			player:removeItem(7529, 1)
+			player:removeItem(7530, 1)
+			player:removeItem(7531, 1)
+			npcHandler:say("Cling clang! Me done good work today! Li'l one gets amulet! Mighty, mighty amulet lil' one has. Don't know what but mighty, mighty it is!!!", npc, creature)
+			player:addItem(7532, 1)
+		else
+			npcHandler:say("Li'l one needs to get me the fragments.", npc, creature)
+		end
+		npcHandler:setTopic(playerId, 0)
+	end
+
 	return true
 end
 

@@ -32649,7 +32649,7 @@
 		<attribute key="shootType" value="tarsalarrow"/>
 		<attribute key="maxhitchance" value="94"/>
 		<attribute key="attack" value="40"/>
-		<attribute key="weight" value="70"/>
+		<attribute key="weight" value="0"/>
 		<attribute key="script" value="moveevent;weapon">
 			<attribute key="action" value="removecount"/>
 			<attribute key="level" value="30"/>
