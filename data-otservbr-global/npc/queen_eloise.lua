@@ -168,8 +168,8 @@ local function creatureSayCallback(npc, creature, type, message)
 end
 
 -- Promotion
-local node1 = keywordHandler:addKeyword({ "promot" }, StdModule.say, { npcHandler = npcHandler, onlyFocus = true, text = "I can promote you for 20000 gold coins. Do you want me to promote you?" })
-node1:addChildKeyword({ "yes" }, StdModule.promotePlayer, { npcHandler = npcHandler, cost = 20000, level = 20, text = "Congratulations! You are now promoted." })
+local node1 = keywordHandler:addKeyword({ "promot" }, StdModule.say, { npcHandler = npcHandler, onlyFocus = true, text = "I can promote you for 2000 gold coins. Do you want me to promote you?" })
+node1:addChildKeyword({ "yes" }, StdModule.promotePlayer, { npcHandler = npcHandler, cost = 2000, level = 20, text = "Congratulations! You are now promoted." })
 node1:addChildKeyword({ "no" }, StdModule.say, { npcHandler = npcHandler, onlyFocus = true, text = "Alright then, come back when you are ready.", reset = true })
 -- Postman
 keywordHandler:addKeyword({ "uniforms" }, StdModule.say, { npcHandler = npcHandler, text = "I remember about those uniforms, they had a camouflage inlay so they could be worn the inside out too. I will send some color samples via mail to Mr. Postner." }, function(player)
