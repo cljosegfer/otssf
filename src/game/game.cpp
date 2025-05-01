@@ -2936,7 +2936,8 @@ void Game::playerQuickLootCorpse(const std::shared_ptr<Player> &player, const st
 	}
 
 	std::vector<std::shared_ptr<Item>> itemList;
-	bool ignoreListItems = (player->quickLootFilter == QUICKLOOTFILTER_SKIPPEDLOOT);
+	// bool ignoreListItems = (player->quickLootFilter == QUICKLOOTFILTER_SKIPPEDLOOT);
+	bool ignoreListItems = (player->quickLootFilter == QUICKLOOTFILTER_ACCEPTEDLOOT); // use loot list as white
 
 	bool missedAnyGold = false;
 	bool missedAnyItem = false;
@@ -7479,7 +7480,8 @@ bool Game::combatChangeHealth(const std::shared_ptr<Creature> &attacker, const s
 				}
 
 				// no mana damage but leaks to hp
-				target->drainHealth(attacker, manaDamage * 0.16);
+				int32_t leakDamage = manaDamage * 0.16;
+				target->drainHealth(attacker, leakDamage);
 				// target->drainMana(attacker, manaDamage);
 
 				// if (target->getMana() == 0 && manaShield > 0) {
@@ -7489,6 +7491,7 @@ bool Game::combatChangeHealth(const std::shared_ptr<Creature> &attacker, const s
 				addMagicEffect(spectators.data(), targetPos, CONST_ME_LOSEENERGY);
 
 				std::string damageString = std::to_string(manaDamage);
+				std::string leakdamageString = std::to_string(leakDamage);
 
 				std::string spectatorMessage;
 
@@ -7520,6 +7523,7 @@ bool Game::combatChangeHealth(const std::shared_ptr<Creature> &attacker, const s
 						} else {
 							ss << " due to an " << attackMsg << " by " << attacker->getNameDescription() << '.';
 						}
+						ss << " You lose " << leakdamageString << " hitpoints."; // leak log
 						message.type = MESSAGE_DAMAGE_RECEIVED;
 						message.text = ss.str();
 					} else {
