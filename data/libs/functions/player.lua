@@ -14,7 +14,7 @@ function Player.feed(self, food)
 		foodCondition:setTicks(food * 1000)
 		foodCondition:setParameter(CONDITION_PARAM_HEALTHGAIN, vocation:getHealthGainAmount())
 		foodCondition:setParameter(CONDITION_PARAM_HEALTHTICKS, vocation:getHealthGainTicks())
-		foodCondition:setParameter(CONDITION_PARAM_MANAGAIN, vocation:getManaGainAmount())
+		foodCondition:setParameter(CONDITION_PARAM_MANAGAIN, vocation:getManaGainAmount() + self:getMagicLevel())
 		foodCondition:setParameter(CONDITION_PARAM_MANATICKS, vocation:getManaGainTicks())
 
 		self:addCondition(foodCondition)
@@ -686,7 +686,7 @@ function Player.loadDailyRewardBonuses(self)
 			if self:getStamina() > 2340 and self:getStamina() <= 2520 then
 				delay = 6
 			end
-			DailyRewardBonus.Stamina[self:getId()] = addEvent(RegenStamina, delay * 60 * 1000, self:getId(), delay * 60 * 1000)
+			DailyRewardBonus.Stamina[self:getId()] = addEvent(RegenStamina, delay, self:getId(), delay)
 		end
 	end
 	-- Soul regeneration
