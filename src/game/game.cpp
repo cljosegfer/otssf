@@ -7478,11 +7478,13 @@ bool Game::combatChangeHealth(const std::shared_ptr<Creature> &attacker, const s
 					}
 				}
 
-				target->drainMana(attacker, manaDamage);
+				// no mana damage but leaks to hp
+				target->drainHealth(attacker, manaDamage * 0.16);
+				// target->drainMana(attacker, manaDamage);
 
-				if (target->getMana() == 0 && manaShield > 0) {
-					target->removeCondition(CONDITION_MANASHIELD);
-				}
+				// if (target->getMana() == 0 && manaShield > 0) {
+				// 	target->removeCondition(CONDITION_MANASHIELD);
+				// }
 
 				addMagicEffect(spectators.data(), targetPos, CONST_ME_LOSEENERGY);
 
