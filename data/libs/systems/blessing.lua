@@ -261,7 +261,7 @@ Blessings.BuyAllBlesses = function(player)
 	local totalCost = 0
 
 	for _, bless in ipairs(missingBless) do
-		totalCost = totalCost + Blessings.getBlessingCost(player:getLevel(), true, bless.id >= 7)
+		-- totalCost = totalCost + Blessings.getBlessingCost(player:getLevel(), true, bless.id >= 7)
 	end
 
 	if missingBlessAmt == 0 then
