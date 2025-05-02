@@ -30,6 +30,7 @@ spell:cooldown(14 * 1000)
 spell:groupCooldown(2 * 1000)
 spell:level(14)
 spell:mana(50)
+spell:soul(1) -- rebalance
 spell:isSelfTarget(true)
 spell:isAggressive(false)
 spell:needLearn(false)
