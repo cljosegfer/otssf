@@ -7,9 +7,12 @@ function rune.onCastSpell(player, variant)
 		local corpse = tile:getTopDownItem()
 		if corpse then
 			local itemType = corpse:getType()
-			if itemType:isCorpse() and itemType:isMovable() then
-				if #player:getSummons() < 2 and player:getSkull() ~= SKULL_BLACK then
-					local summon = Game.createMonster("Skeleton", position, true, true)
+			-- if itemType:isCorpse() and itemType:isMovable() then
+			if itemType:isCorpse() then
+				-- if #player:getSummons() < 2 and player:getSkull() ~= SKULL_BLACK then
+				if player:getSkull() ~= SKULL_BLACK then
+					local monsterName = corpse:getName()
+					local summon = Game.createMonster(monsterName.sub(monsterName, 6), position, true, false, player) -- remove "dead "
 					if summon then
 						corpse:remove()
 						player:setSummon(summon)
