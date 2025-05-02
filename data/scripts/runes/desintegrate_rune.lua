@@ -20,9 +20,16 @@ function rune.onCastSpell(creature, var, isHotkey)
 		if corpse then
 			local itemType = corpse:getType()
 			if itemType:isCorpse() then
-				local monsterName = corpse:getName()
-				local monsterType = MonsterType(monsterName.sub(monsterName, 6)) -- remove "dead "
-				dmg = monsterType:getHealth()
+				local corpseName = corpse:getName()
+				local prefix, monsterName = corpseName:match"^(%S+)%s+(.+)" -- remove preffix
+				local monsterType = MonsterType(monsterName)
+				if monsterType then
+					dmg = monsterType:getHealth()
+				else
+					dmg = 100
+					creature:sendCancelMessage("couldnt find the monster")
+					creature:getPosition():sendMagicEffect(CONST_ME_POFF)
+				end
 				corpse:remove()
 				return combat:execute(creature, var)
 			end

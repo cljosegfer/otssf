@@ -11,8 +11,9 @@ function rune.onCastSpell(player, variant)
 			if itemType:isCorpse() then
 				-- if #player:getSummons() < 2 and player:getSkull() ~= SKULL_BLACK then
 				if player:getSkull() ~= SKULL_BLACK then
-					local monsterName = corpse:getName()
-					local summon = Game.createMonster(monsterName.sub(monsterName, 6), position, true, false, player) -- remove "dead "
+					local corpseName = corpse:getName()
+					local prefix, monsterName = corpseName:match"^(%S+)%s+(.+)" -- remove preffix
+					local summon = Game.createMonster(monsterName, position, true, false, player)
 					if summon then
 						corpse:remove()
 						player:setSummon(summon)
