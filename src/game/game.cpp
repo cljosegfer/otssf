@@ -2936,8 +2936,8 @@ void Game::playerQuickLootCorpse(const std::shared_ptr<Player> &player, const st
 	}
 
 	std::vector<std::shared_ptr<Item>> itemList;
-	// bool ignoreListItems = (player->quickLootFilter == QUICKLOOTFILTER_SKIPPEDLOOT);
-	bool ignoreListItems = (player->quickLootFilter == QUICKLOOTFILTER_ACCEPTEDLOOT); // use loot list as white
+	bool ignoreListItems = (player->quickLootFilter == QUICKLOOTFILTER_SKIPPEDLOOT);
+	// bool ignoreListItems = (player->quickLootFilter == QUICKLOOTFILTER_ACCEPTEDLOOT); // just use the depot stash to swap mods
 
 	bool missedAnyGold = false;
 	bool missedAnyItem = false;
