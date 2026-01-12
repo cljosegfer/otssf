@@ -420,9 +420,9 @@ maxMarketOffersAtATimePerPlayer = 100
 
 -- MySQL
 mysqlHost = "127.0.0.1"
-mysqlUser = "root"
-mysqlPass = "root"
-mysqlDatabase = "otservbr-global"
+mysqlUser = "canaryuser"
+mysqlPass = "password123"
+mysqlDatabase = "canary"
 mysqlDatabaseBackup = false
 mysqlPort = 3306
 mysqlSock = ""
