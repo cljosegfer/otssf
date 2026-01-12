@@ -319,7 +319,7 @@ quickLootMaxCorpses = 30
 storeInboxMaxLimit = 2000
 enablePlayerPutItemInAmmoSlot = false
 startStreakLevel = 0
-showLootsInBestiary = false
+showLootsInBestiary = true
 minTownIdToBankTransferFromMain = 4
 enableSupportOutfit = true
 
