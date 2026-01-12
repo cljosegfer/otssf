@@ -2894,9 +2894,10 @@ void Player::updateRegeneration() const {
 
 	const auto &condition = getCondition(CONDITION_REGENERATION, CONDITIONID_DEFAULT);
 	if (condition) {
+		float mlBonus = 1.0f + (getMagicLevel() * 0.1f); // 10% bonus per magic level
 		condition->setParam(CONDITION_PARAM_HEALTHGAIN, vocation->getHealthGainAmount());
 		condition->setParam(CONDITION_PARAM_HEALTHTICKS, vocation->getHealthGainTicks());
-		condition->setParam(CONDITION_PARAM_MANAGAIN, vocation->getManaGainAmount());
+		condition->setParam(CONDITION_PARAM_MANAGAIN, vocation->getManaGainAmount() * mlBonus);
 		condition->setParam(CONDITION_PARAM_MANATICKS, vocation->getManaGainTicks());
 	}
 }
