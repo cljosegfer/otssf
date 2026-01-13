@@ -1109,6 +1109,7 @@ void Player::addSkillAdvance(skills_t skill, uint64_t count) {
 		return;
 	}
 
+	count = count * (1 + (getLevel() / 10)); // skill lvl scalling
 	g_events().eventPlayerOnGainSkillTries(static_self_cast<Player>(), skill, count);
 	g_callbacks().executeCallback(EventCallback_t::playerOnGainSkillTries, getPlayer(), std::ref(skill), std::ref(count));
 	if (count == 0) {
