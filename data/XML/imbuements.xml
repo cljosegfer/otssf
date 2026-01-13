@@ -173,109 +173,109 @@
 	</imbuement>
 	<!-- Protections Imbuements -->
 	<imbuement name="Lich Shroud" base="1" category="4" iconid="25" premium="0" storage="0">
-		<attribute key="description" value="Reduces death damage by 2%." />
-		<attribute key="effect" type="reduction" combat="death" value="2" />
+		<attribute key="description" value="Reduces death damage by 10%." />
+		<attribute key="effect" type="reduction" combat="death" value="10" />
 		<attribute key="item" value="11466" count="25" />
 	</imbuement>
 	<imbuement name="Lich Shroud" base="2" category="4" iconid="25" premium="1" storage="0">
-		<attribute key="description" value="Reduces death damage by 5%." />
-		<attribute key="effect" type="reduction" combat="death" value="5" />
+		<attribute key="description" value="Reduces death damage by 25%." />
+		<attribute key="effect" type="reduction" combat="death" value="25" />
 		<attribute key="item" value="11466" count="25" />
 		<attribute key="item" value="22007" count="20" />
 	</imbuement>
 	<imbuement name="Lich Shroud" base="3" category="4" iconid="25" premium="1" storage="50488">
-		<attribute key="description" value="Reduces death damage by 10%." />
-		<attribute key="effect" type="reduction" combat="death" value="10" />
+		<attribute key="description" value="Reduces death damage by 50%." />
+		<attribute key="effect" type="reduction" combat="death" value="50" />
 		<attribute key="item" value="11466" count="25" />
 		<attribute key="item" value="22007" count="20" />
 		<attribute key="item" value="9660" count="5" />
 	</imbuement>
 	<imbuement name="Snake Skin" base="1" category="5" iconid="28" premium="0" storage="0">
-		<attribute key="description" value="Reduces earth damage by 3%." />
-		<attribute key="effect" type="reduction" combat="earth" value="3" />
+		<attribute key="description" value="Reduces earth damage by 10%." />
+		<attribute key="effect" type="reduction" combat="earth" value="10" />
 		<attribute key="item" value="17823" count="25" />
 	</imbuement>
 	<imbuement name="Snake Skin" base="2" category="5" iconid="28" premium="1" storage="0">
-		<attribute key="description" value="Reduces earth damage by 8%." />
-		<attribute key="effect" type="reduction" combat="earth" value="8" />
+		<attribute key="description" value="Reduces earth damage by 25%." />
+		<attribute key="effect" type="reduction" combat="earth" value="25" />
 		<attribute key="item" value="17823" count="25" />
 		<attribute key="item" value="9694" count="20" />
 	</imbuement>
 	<imbuement name="Snake Skin" base="3" category="5" iconid="28" premium="1" storage="50492">
-		<attribute key="description" value="Reduces earth damage by 15%." />
-		<attribute key="effect" type="reduction" combat="earth" value="15" />
+		<attribute key="description" value="Reduces earth damage by 50%." />
+		<attribute key="effect" type="reduction" combat="earth" value="50" />
 		<attribute key="item" value="17823" count="25" />
 		<attribute key="item" value="9694" count="20" />
 		<attribute key="item" value="11702" count="10" />
 	</imbuement>
 	<imbuement name="Dragon Hide" base="1" category="6" iconid="34" premium="0" storage="0">
-		<attribute key="description" value="Reduces fire damage by 3%." />
-		<attribute key="effect" type="reduction" combat="fire" value="3" />
+		<attribute key="description" value="Reduces fire damage by 10%." />
+		<attribute key="effect" type="reduction" combat="fire" value="10" />
 		<attribute key="item" value="5877" count="20" />
 	</imbuement>
 	<imbuement name="Dragon Hide" base="2" category="6" iconid="34" premium="1" storage="0">
-		<attribute key="description" value="Reduces fire damage by 8%." />
-		<attribute key="effect" type="reduction" combat="fire" value="8" />
+		<attribute key="description" value="Reduces fire damage by 25%." />
+		<attribute key="effect" type="reduction" combat="fire" value="25" />
 		<attribute key="item" value="5877" count="20" />
 		<attribute key="item" value="16131" count="10" />
 	</imbuement>
 	<imbuement name="Dragon Hide" base="3" category="6" iconid="34" premium="1" storage="50494">
-		<attribute key="description" value="Reduces fire damage by 15%." />
-		<attribute key="effect" type="reduction" combat="fire" value="15" />
+		<attribute key="description" value="Reduces fire damage by 50%." />
+		<attribute key="effect" type="reduction" combat="fire" value="50" />
 		<attribute key="item" value="5877" count="20" />
 		<attribute key="item" value="16131" count="10" />
 		<attribute key="item" value="11658" count="5" />
 	</imbuement>
 	<imbuement name="Quara Scale" base="1" category="7" iconid="40" premium="0" storage="0">
-		<attribute key="description" value="Reduces ice damage by 3%." />
-		<attribute key="effect" type="reduction" combat="ice" value="3" />
+		<attribute key="description" value="Reduces ice damage by 10%." />
+		<attribute key="effect" type="reduction" combat="ice" value="10" />
 		<attribute key="item" value="10295" count="25" />
 	</imbuement>
 	<imbuement name="Quara Scale" base="2" category="7" iconid="40" premium="1" storage="0">
-		<attribute key="description" value="Reduces ice damage by 8%." />
-		<attribute key="effect" type="reduction" combat="ice" value="8" />
+		<attribute key="description" value="Reduces ice damage by 25%." />
+		<attribute key="effect" type="reduction" combat="ice" value="25" />
 		<attribute key="item" value="10295" count="25" />
 		<attribute key="item" value="10307" count="15" />
 	</imbuement>
 	<imbuement name="Quara Scale" base="3" category="7" iconid="40" premium="1" storage="50496">
-		<attribute key="description" value="Reduces ice damage by 15%." />
-		<attribute key="effect" type="reduction" combat="ice" value="15" />
+		<attribute key="description" value="Reduces ice damage by 50%." />
+		<attribute key="effect" type="reduction" combat="ice" value="50" />
 		<attribute key="item" value="10295" count="25" />
 		<attribute key="item" value="10307" count="15" />
 		<attribute key="item" value="14012" count="10" />
 	</imbuement>
 	<imbuement name="Cloud Fabric" base="1" category="8" iconid="31" premium="0" storage="0">
-		<attribute key="description" value="Reduces energy damage by 3%." />
-		<attribute key="effect" type="reduction" combat="energy" value="3" />
+		<attribute key="description" value="Reduces energy damage by 10%." />
+		<attribute key="effect" type="reduction" combat="energy" value="10" />
 		<attribute key="item" value="9644" count="20" />
 	</imbuement>
 	<imbuement name="Cloud Fabric" base="2" category="8" iconid="31" premium="1" storage="0">
-		<attribute key="description" value="Reduces energy damage by 8%." />
-		<attribute key="effect" type="reduction" combat="energy" value="8" />
+		<attribute key="description" value="Reduces energy damage by 25%." />
+		<attribute key="effect" type="reduction" combat="energy" value="25" />
 		<attribute key="item" value="9644" count="20" />
 		<attribute key="item" value="14079" count="15" />
 	</imbuement>
 	<imbuement name="Cloud Fabric" base="3" category="8" iconid="31" premium="1" storage="50490">
-		<attribute key="description" value="Reduces energy damage by 15%." />
-		<attribute key="effect" type="reduction" combat="energy" value="15" />
+		<attribute key="description" value="Reduces energy damage by 50%." />
+		<attribute key="effect" type="reduction" combat="energy" value="50" />
 		<attribute key="item" value="9644" count="20" />
 		<attribute key="item" value="14079" count="15" />
 		<attribute key="item" value="9665" count="10" />
 	</imbuement>
 	<imbuement name="Demon Presence" base="1" category="9" iconid="37" premium="0" storage="0">
-		<attribute key="description" value="Reduces holy damage by 3%." />
-		<attribute key="effect" type="reduction" combat="holy" value="3" />
+		<attribute key="description" value="Reduces holy damage by 10%." />
+		<attribute key="effect" type="reduction" combat="holy" value="10" />
 		<attribute key="item" value="9639" count="25" />
 	</imbuement>
 	<imbuement name="Demon Presence" base="2" category="9" iconid="37" premium="1" storage="0">
-		<attribute key="description" value="Reduces holy damage by 8%." />
-		<attribute key="effect" type="reduction" combat="holy" value="8" />
+		<attribute key="description" value="Reduces holy damage by 25%." />
+		<attribute key="effect" type="reduction" combat="holy" value="25" />
 		<attribute key="item" value="9639" count="25" />
 		<attribute key="item" value="9638" count="25" />
 	</imbuement>
 	<imbuement name="Demon Presence" base="3" category="9" iconid="37" premium="1" storage="50498">
-		<attribute key="description" value="Reduces holy damage by 15%." />
-		<attribute key="effect" type="reduction" combat="holy" value="15" />
+		<attribute key="description" value="Reduces holy damage by 50%." />
+		<attribute key="effect" type="reduction" combat="holy" value="50" />
 		<attribute key="item" value="9639" count="25" />
 		<attribute key="item" value="9638" count="25" />
 		<attribute key="item" value="10304" count="20" />
