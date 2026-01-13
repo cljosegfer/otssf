@@ -103,19 +103,23 @@ Blessings.DropLoot = function(player, corpse, chance, skulled)
 	math.randomseed(os.time())
 	chance = chance * multiplier
 	Blessings.DebugPrint("DropLoot chance " .. chance)
-	for i = CONST_SLOT_HEAD, CONST_SLOT_AMMO do
-		local item = player:getSlotItem(i)
-		if item then
-			local thisChance = item:isContainer() and chance or (chance / 10)
-			local thisRandom = math.random(100 * multiplier)
+	print("DropLoot chance " .. chance)
+	-- for i = CONST_SLOT_HEAD, CONST_SLOT_AMMO do
+	i = CONST_SLOT_BACKPACK
+	local item = player:getSlotItem(i)
+	if item then
+		local thisChance = item:isContainer() and chance or (chance / 10)
+		local thisRandom = math.random(100 * multiplier)
 
-			Blessings.DebugPrint(thisChance / multiplier .. "%" .. " | thisRandom " .. thisRandom / multiplier .. "%", "DropLoot item " .. item:getName() .. " |")
-			if skulled or thisRandom <= thisChance then
-				Blessings.DebugPrint("Dropped " .. item:getName())
-				item:moveTo(corpse)
-			end
-		end
+		Blessings.DebugPrint(thisChance / multiplier .. "%" .. " | thisRandom " .. thisRandom / multiplier .. "%", "DropLoot item " .. item:getName() .. " |")
+		print(thisChance / multiplier .. "%" .. " | thisRandom " .. thisRandom / multiplier .. "%", "DropLoot item " .. item:getName() .. " |")
+		-- if skulled or thisRandom <= thisChance then
+		Blessings.DebugPrint("Dropped " .. item:getName())
+		print("Dropped " .. item:getName())
+		item:moveTo(corpse)
+		-- end
 	end
+	-- end
 
 	if skulled and Blessings.Config.SkulledDeathLoseStoreItem then
 		local inbox = player:getStoreInbox()

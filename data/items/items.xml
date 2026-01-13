@@ -5935,6 +5935,7 @@
 		<attribute key="imbuementslot" value="1">
 			<attribute key="increase capacity" value="3"/>
 		</attribute>
+		<attribute key="slotType" value="ammo"/>
 		<attribute key="script" value="moveevent">
 			<attribute key="slot" value="backpack"/>
 		</attribute>
