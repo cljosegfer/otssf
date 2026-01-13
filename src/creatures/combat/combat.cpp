@@ -747,11 +747,12 @@ CombatDamage Combat::applyImbuementElementalDamage(const std::shared_ptr<Player>
 			break;
 		}
 
-		float damagePercent = imbuementInfo.imbuement->elementDamage / 100.0;
+		float damagePercent = imbuementInfo.imbuement->elementDamage / 100.0 * (1 + attackerPlayer->getMagicLevel() * 0.01);
 
 		damage.secondary.type = imbuementInfo.imbuement->combatType;
 		damage.secondary.value = damage.primary.value * (damagePercent);
-		damage.primary.value = damage.primary.value * (1 - damagePercent);
+		// damage.primary.value = damage.primary.value * (1 - damagePercent);
+		damage.primary.value = damage.primary.value * (1);
 
 		if (imbuementInfo.imbuement->soundEffect != SoundEffect_t::SILENCE) {
 			g_game().sendSingleSoundEffect(item->getPosition(), imbuementInfo.imbuement->soundEffect, item->getHoldingPlayer());
@@ -1705,9 +1706,10 @@ void ValueCallback::getMinMaxValues(const std::shared_ptr<Player> &player, Comba
 		);
 
 		if (shouldCalculateSecondaryDamage) {
-			double factor = static_cast<double>(elementAttack) / static_cast<double>(attackValue); // attack value here is phys dmg + element dmg
+			double factor = static_cast<double>(elementAttack) / static_cast<double>(attackValue) * (1 + player->getMagicLevel() * 0.01); // attack value here is phys dmg + element dmg
 			int32_t elementDamage = std::round(defaultDmg * factor);
-			int32_t physDmg = std::round(defaultDmg * (1.0 - factor));
+			// int32_t physDmg = std::round(defaultDmg * (1.0 - factor));
+			int32_t physDmg = std::round(defaultDmg * (1.0));
 			damage.primary.value = physDmg;
 			damage.secondary.value = elementDamage;
 		} else {
