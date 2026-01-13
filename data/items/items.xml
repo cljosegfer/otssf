@@ -18042,11 +18042,11 @@
 		<attribute key="showCount" value="0"/>
 		<attribute key="weight" value="100"/>
 	</item>
-	<item id="6548" article="a" name="purple powder">
+	<item id="6548" article="a" name="augmentation orb">
 		<attribute key="primarytype" value="rubbish"/>
 		<attribute key="weight" value="100"/>
 	</item>
-	<item id="6549" article="a" name="green powder">
+	<item id="6549" article="a" name="regal orb">
 		<attribute key="primarytype" value="rubbish"/>
 		<attribute key="weight" value="100"/>
 	</item>
@@ -18055,7 +18055,7 @@
 		<attribute key="description" value="It reeks of hatred and malice."/>
 		<attribute key="weight" value="100"/>
 	</item>
-	<item id="6551" article="a" name="blue powder">
+	<item id="6551" article="a" name="transmutation orb">
 		<attribute key="primarytype" value="rubbish"/>
 		<attribute key="description" value="Sun can be a merciless killer, but so can you."/>
 		<attribute key="weight" value="100"/>
@@ -25688,7 +25688,7 @@
 		<attribute key="weight" value="300"/>
 	</item>
 	<item id="9596" article="a" name="squeezing gear of girlpower">
-		<attribute key="description" value="This nifty gadget can be used for many vital and less vital purposes. If it's not jammed, that is"/>
+		<attribute key="description" value="silver hand mirror"/>
 		<attribute key="weight" value="300"/>
 	</item>
 	<item id="9597" article="a" name="squeezing gear of girlpower">
@@ -25698,7 +25698,7 @@
 		<attribute key="weight" value="300"/>
 	</item>
 	<item id="9598" article="a" name="whacking driller of fate">
-		<attribute key="description" value="This nifty gadget can be used for many vital and less vital purposes. If it's not jammed, that is"/>
+		<attribute key="description" value="jeweler's kit"/>
 		<attribute key="weight" value="300"/>
 	</item>
 	<item id="9599" article="a" name="whacking driller of fate">
