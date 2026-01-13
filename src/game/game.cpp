@@ -7525,11 +7525,12 @@ bool Game::combatChangeHealth(const std::shared_ptr<Creature> &attacker, const s
 					}
 				}
 
-				target->drainMana(attacker, manaDamage);
+				// target->drainMana(attacker, manaDamage);
+				target->drainHealth(attacker, manaDamage * 0.16);
 
-				if (target->getMana() == 0 && manaShield > 0) {
-					target->removeCondition(CONDITION_MANASHIELD);
-				}
+				// if (target->getMana() == 0 && manaShield > 0) {
+				// 	target->removeCondition(CONDITION_MANASHIELD);
+				// }
 
 				addMagicEffect(spectators.data(), targetPos, CONST_ME_LOSEENERGY);
 
