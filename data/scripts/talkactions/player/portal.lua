@@ -3,7 +3,7 @@ local portal = TalkAction("!portal")
 function portal.onSay(player, words, param)
     -- 1. Check if the player is in combat
     -- In Canary, checking for the "In Fight" condition is the standard way
-    if player:getCondition(CONDITION_INFIGHT) then
+    if player:getCondition(CONDITION_INFIGHT, CONDITIONID_DEFAULT) then
         player:sendCancelMessage("You cannot use the portal while in combat!")
         player:getPosition():sendMagicEffect(CONST_ME_POFF)
         return true
