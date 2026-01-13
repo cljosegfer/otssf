@@ -645,7 +645,7 @@ void Combat::CombatHealthFunc(const std::shared_ptr<Creature> &caster, const std
 
 	if (attackerPlayer) {
 		const auto &item = attackerPlayer->getWeapon();
-		damage = applyImbuementElementalDamage(attackerPlayer, item, damage);
+		damage = applyImbuementElementalDamage(attackerPlayer, item, damage, target);
 		g_events().eventPlayerOnCombat(attackerPlayer, target, item, damage);
 		g_callbacks().executeCallback(EventCallback_t::playerOnCombat, attackerPlayer, target, item, std::ref(damage));
 
@@ -722,47 +722,57 @@ void Combat::CombatHealthFunc(const std::shared_ptr<Creature> &caster, const std
 	}
 }
 
-CombatDamage Combat::applyImbuementElementalDamage(const std::shared_ptr<Player> &attackerPlayer, std::shared_ptr<Item> item, CombatDamage damage) {
-	if (!item) {
-		return damage;
-	}
+CombatDamage Combat::applyImbuementElementalDamage(const std::shared_ptr<Player> &attackerPlayer, std::shared_ptr<Item> item, CombatDamage damage, const std::shared_ptr<Creature> &target) {
+    if (!item || !target) {
+        return damage;
+    }
 
-	if (item->getWeaponType() == WEAPON_AMMO && attackerPlayer && attackerPlayer->getInventoryItem(CONST_SLOT_LEFT) != nullptr) {
-		item = attackerPlayer->getInventoryItem(CONST_SLOT_LEFT);
-	}
+    if (item->getWeaponType() == WEAPON_AMMO && attackerPlayer && attackerPlayer->getInventoryItem(CONST_SLOT_LEFT) != nullptr) {
+        item = attackerPlayer->getInventoryItem(CONST_SLOT_LEFT);
+    }
 
-	for (uint8_t slotid = 0; slotid < item->getImbuementSlot(); slotid++) {
-		ImbuementInfo imbuementInfo;
-		if (!item->getImbuementInfo(slotid, &imbuementInfo)) {
-			continue;
-		}
+    // Capture the original physical hit to use as the base for all calculations
+    int32_t basePhysicalDamage = damage.primary.value;
 
-		if (imbuementInfo.imbuement->combatType == COMBAT_NONE
-		    || damage.primary.type == COMBAT_HEALING
-		    || damage.secondary.type == COMBAT_HEALING) {
-			continue;
-		}
+    for (uint8_t slotid = 0; slotid < item->getImbuementSlot(); slotid++) {
+        ImbuementInfo imbuementInfo;
+        if (!item->getImbuementInfo(slotid, &imbuementInfo)) {
+            continue;
+        }
 
-		if (damage.primary.type != COMBAT_PHYSICALDAMAGE) {
-			break;
-		}
+        // Only process elemental imbuements
+        if (imbuementInfo.imbuement->combatType == COMBAT_NONE || imbuementInfo.imbuement->elementDamage <= 0) {
+            continue;
+        }
 
-		float damagePercent = imbuementInfo.imbuement->elementDamage / 100.0 * (1 + attackerPlayer->getMagicLevel() * 0.01);
+        // Calculate Extra Damage: Phys * (Percent/100) * (1 + ML/100)
+        float scalingFactor = 1.0f + (attackerPlayer->getMagicLevel() * 0.01f);
+        int32_t extraDamageValue = static_cast<int32_t>(basePhysicalDamage * (imbuementInfo.imbuement->elementDamage / 100.0f) * scalingFactor);
 
-		damage.secondary.type = imbuementInfo.imbuement->combatType;
-		damage.secondary.value = damage.primary.value * (damagePercent);
-		// damage.primary.value = damage.primary.value * (1 - damagePercent);
-		damage.primary.value = damage.primary.value * (1);
+        // If the secondary slot is empty, use it for the first element found
+        if (damage.secondary.type == COMBAT_NONE) {
+            damage.secondary.type = imbuementInfo.imbuement->combatType;
+            damage.secondary.value = extraDamageValue;
+        } else {
+            // Create a new damage packet and proc it immediately!
+            CombatDamage extraPacket;
+            extraPacket.primary.type = imbuementInfo.imbuement->combatType;
+            extraPacket.primary.value = extraDamageValue;
+            extraPacket.origin = damage.origin;
+            
+            // Deal the extra damage packet
+            g_game().combatChangeHealth(attackerPlayer, target, extraPacket);
+        }
 
-		if (imbuementInfo.imbuement->soundEffect != SoundEffect_t::SILENCE) {
-			g_game().sendSingleSoundEffect(item->getPosition(), imbuementInfo.imbuement->soundEffect, item->getHoldingPlayer());
-		}
+        if (imbuementInfo.imbuement->soundEffect != SoundEffect_t::SILENCE) {
+            g_game().sendSingleSoundEffect(item->getPosition(), imbuementInfo.imbuement->soundEffect, attackerPlayer);
+        }
+        
+        // If damage imbuement is set, we can return without checking other slots
+		// break;
+    }
 
-		// If damage imbuement is set, we can return without checking other slots
-		break;
-	}
-
-	return damage;
+    return damage;
 }
 
 void Combat::CombatManaFunc(const std::shared_ptr<Creature> &caster, const std::shared_ptr<Creature> &target, const CombatParams &params, CombatDamage* data) {
