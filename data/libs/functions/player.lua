@@ -14,7 +14,8 @@ function Player.feed(self, food)
 		foodCondition:setTicks(food * 1000)
 		foodCondition:setParameter(CONDITION_PARAM_HEALTHGAIN, vocation:getHealthGainAmount())
 		foodCondition:setParameter(CONDITION_PARAM_HEALTHTICKS, vocation:getHealthGainTicks())
-		foodCondition:setParameter(CONDITION_PARAM_MANAGAIN, vocation:getManaGainAmount())
+		local mlBonus = 1.0 + (self:getMagicLevel() * 0.1); -- 10% bonus per magic level
+		foodCondition:setParameter(CONDITION_PARAM_MANAGAIN, vocation:getManaGainAmount() * mlBonus)
 		foodCondition:setParameter(CONDITION_PARAM_MANATICKS, vocation:getManaGainTicks())
 
 		self:addCondition(foodCondition)
