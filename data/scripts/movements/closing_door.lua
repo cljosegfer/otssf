@@ -40,7 +40,8 @@ function closingDoor.onStepIn(creature, item, position, fromPosition)
 			if item.actionid > 0 and player:getLevel() >= item.actionid - 1000 then
 				return true
 			else
-				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Only the worthy may pass.")
+				local requiredLevel = item.actionid - 1000
+				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("Only the worthy of level %d or higher may pass.", requiredLevel))
 				player:teleportTo(fromPosition, true)
 				return false
 			end
