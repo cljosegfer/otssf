@@ -22,8 +22,8 @@ local CAT_DATA = {
     AXE           = {46},
     SWORD         = {49},
     CLUB          = {52},
-    SHIELDING     = {55},
-    DISTANCE      = {58},
+    SHIELDING     = {58},
+    DISTANCE      = {55},
     MAGIC_LVL     = {61},
     CAPACITY      = {64}
 }
@@ -48,11 +48,11 @@ local function getValidPool(target)
         addIdsToPool(pool, CAT_DATA.LIFE_LEECH)
         addIdsToPool(pool, CAT_DATA.MANA_LEECH)
         addIdsToPool(pool, CAT_DATA.CRIT)
-        -- if wType == 1 then addIdsToPool(pool, CAT_DATA.SWORD)
-        -- elseif wType == 2 then addIdsToPool(pool, CAT_DATA.AXE)
-        -- elseif wType == 3 then addIdsToPool(pool, CAT_DATA.CLUB)
-        -- elseif wType == 4 then addIdsToPool(pool, CAT_DATA.DISTANCE)
-        -- elseif wType == 5 or attack > 0 then addIdsToPool(pool, CAT_DATA.MAGIC_LVL) end
+        if wType == WEAPON_SWORD then addIdsToPool(pool, CAT_DATA.SWORD)
+        elseif wType == WEAPON_AXE then addIdsToPool(pool, CAT_DATA.AXE)
+        elseif wType == WEAPON_CLUB then addIdsToPool(pool, CAT_DATA.CLUB)
+        elseif wType == WEAPON_DISTANCE then addIdsToPool(pool, CAT_DATA.DISTANCE)
+        elseif wType == WEAPON_WAND then addIdsToPool(pool, CAT_DATA.MAGIC_LVL) end
         return pool
     end
 
@@ -70,13 +70,14 @@ local function getValidPool(target)
         addIdsToPool(pool, CAT_DATA.PROT_HOLY)
         addIdsToPool(pool, CAT_DATA.LIFE_LEECH)
         addIdsToPool(pool, CAT_DATA.MANA_LEECH)
-        -- addIdsToPool(pool, CAT_DATA.MAGIC_LVL)
-        -- addIdsToPool(pool, CAT_DATA.AXE)
-        -- addIdsToPool(pool, CAT_DATA.SWORD)
-        -- addIdsToPool(pool, CAT_DATA.CLUB)
-        -- addIdsToPool(pool, CAT_DATA.DISTANCE)
-        -- addIdsToPool(pool, CAT_DATA.SHIELDING)
-
+        addIdsToPool(pool, CAT_DATA.MAGIC_LVL)
+        addIdsToPool(pool, CAT_DATA.SHIELDING)
+        if not (wType == WEAPON_SHIELD) then
+            addIdsToPool(pool, CAT_DATA.AXE)
+            addIdsToPool(pool, CAT_DATA.SWORD)
+            addIdsToPool(pool, CAT_DATA.CLUB)
+            addIdsToPool(pool, CAT_DATA.DISTANCE)
+        end
         if bit.band(slotPos, 64) ~= 0 then addIdsToPool(pool, CAT_DATA.SPEED) end
         if it:isContainer() then addIdsToPool(pool, CAT_DATA.CAPACITY) end
     end
