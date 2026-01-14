@@ -8,8 +8,8 @@ function spell.onCastSpell(creature, variant)
 	local monsterType = MonsterType(variant:getString())
 	if not monsterType then
 		returnValue = RETURNVALUE_CREATUREDOESNOTEXIST
-	elseif not creature:hasFlag(PlayerFlag_CanIllusionAll) and not monsterType:isIllusionable() then
-		returnValue = RETURNVALUE_NOTPOSSIBLE
+	-- elseif not creature:hasFlag(PlayerFlag_CanIllusionAll) and not monsterType:isIllusionable() then
+	-- 	returnValue = RETURNVALUE_NOTPOSSIBLE
 	end
 
 	if returnValue ~= RETURNVALUE_NOERROR then
