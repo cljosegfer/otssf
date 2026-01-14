@@ -6837,10 +6837,18 @@ bool Player::isInWarList(uint32_t guildId) const {
 }
 
 uint32_t Player::getMagicLevel() const {
-	uint32_t magic = std::max<int32_t>(0, getLoyaltyMagicLevel() + varStats[STAT_MAGICPOINTS]);
-	// Wheel of destiny magic bonus
-	magic += m_wheelPlayer.getStat(WheelStat_t::MAGIC); // Regular bonus
-	magic += m_wheelPlayer.getMajorStatConditional("Positional Tactics", WheelMajor_t::MAGIC); // Revelation bonus
+	uint32_t baseMagic = getLoyaltyMagicLevel();
+	int32_t modifier = varStats[STAT_MAGICPOINTS];
+
+	// Treat varStats as a percentage increase of baseMagic
+	uint32_t magic = baseMagic;
+	if (modifier != 0) {
+		magic += static_cast<uint32_t>(baseMagic * (modifier / 100.0));
+	}
+
+	// Wheel bonuses are usually 'Flat' in PoE (Added after multipliers)
+	magic += m_wheelPlayer.getStat(WheelStat_t::MAGIC);
+	magic += m_wheelPlayer.getMajorStatConditional("Positional Tactics", WheelMajor_t::MAGIC);
 	return magic;
 }
 
@@ -6884,8 +6892,14 @@ bool Player::hasExtraSwing() {
 }
 
 uint16_t Player::getSkillLevel(skills_t skill) const {
-	auto skillLevel = getLoyaltySkill(skill);
-	skillLevel = std::max<int32_t>(0, skillLevel + varSkills[skill]);
+	uint16_t baseSkill = getLoyaltySkill(skill);
+	int32_t modifier = varSkills[skill];
+
+	// Treat varSkills as a percentage increase of baseSkill
+	int32_t skillLevel = baseSkill;
+	if (modifier != 0) {
+		skillLevel += static_cast<int32_t>(baseSkill * (modifier / 100.0));
+	}
 
 	const auto &maxValuePerSkill = getMaxValuePerSkill();
 	if (const auto it = maxValuePerSkill.find(skill);
