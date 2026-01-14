@@ -7387,6 +7387,11 @@ bool Player::toggleMount(bool mount) {
 			return false;
 		}
 
+		if (hasCondition(CONDITION_INFIGHT)) {
+            sendCancelMessage("You cannot mount while in combat!");
+            return false;
+        }
+
 		const auto &tile = getTile();
 		if (!g_configManager().getBoolean(TOGGLE_MOUNT_IN_PZ) && !group->access && tile && tile->hasFlag(TILESTATE_PROTECTIONZONE)) {
 			sendCancelMessage(RETURNVALUE_ACTIONNOTPERMITTEDINPROTECTIONZONE);
@@ -7435,7 +7440,7 @@ bool Player::toggleMount(bool mount) {
 		kv()->set("last-mount", currentMount->id);
 
 		if (currentMount->speed != 0) {
-			g_game().changeSpeed(static_self_cast<Player>(), currentMount->speed);
+			g_game().changeSpeed(static_self_cast<Player>(), currentMount->speed * 100);
 		}
 	} else {
 		if (!isMounted()) {
@@ -7520,7 +7525,7 @@ bool Player::hasMount(const std::shared_ptr<Mount> &mount) const {
 void Player::dismount() {
 	const auto &mount = g_game().mounts->getMountByID(getCurrentMount());
 	if (mount && mount->speed > 0) {
-		g_game().changeSpeed(static_self_cast<Player>(), -mount->speed);
+		g_game().changeSpeed(static_self_cast<Player>(), -mount->speed * 100);
 	}
 
 	defaultOutfit.lookMount = 0;
