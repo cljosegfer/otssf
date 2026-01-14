@@ -3629,6 +3629,13 @@ BlockType_t Player::blockHit(const std::shared_ptr<Creature> &attacker, const Co
 	}
 
 	if (damage > 0) {
+		// Create a local copy we can modify
+		CombatType_t workingCombatType = combatType;
+		// If Mana Shield is on, treat Physical hits as Energy hits for resistance purposes
+		if (hasCondition(CONDITION_MANASHIELD) && workingCombatType == COMBAT_PHYSICALDAMAGE) {
+			workingCombatType = COMBAT_ENERGYDAMAGE;
+		}
+
 		for (int32_t slot = CONST_SLOT_FIRST; slot <= CONST_SLOT_LAST; ++slot) {
 			if (!isItemAbilityEnabled(static_cast<Slots_t>(slot))) {
 				continue;
@@ -3645,7 +3652,8 @@ BlockType_t Player::blockHit(const std::shared_ptr<Creature> &attacker, const Co
 					continue;
 				}
 
-				const int16_t &imbuementAbsorbPercent = imbuementInfo.imbuement->absorbPercent[combatTypeToIndex(combatType)];
+				// const int16_t &imbuementAbsorbPercent = imbuementInfo.imbuement->absorbPercent[combatTypeToIndex(combatType)];
+				const int16_t &imbuementAbsorbPercent = imbuementInfo.imbuement->absorbPercent[combatTypeToIndex(workingCombatType)];
 
 				if (imbuementAbsorbPercent != 0) {
 					damage -= std::ceil(damage * (imbuementAbsorbPercent / 100.));
@@ -3656,13 +3664,15 @@ BlockType_t Player::blockHit(const std::shared_ptr<Creature> &attacker, const Co
 			const ItemType &it = Item::items[item->getID()];
 			if (it.abilities) {
 				int totalAbsorbPercent = 0;
-				const int16_t &absorbPercent = it.abilities->absorbPercent[combatTypeToIndex(combatType)];
+				// const int16_t &absorbPercent = it.abilities->absorbPercent[combatTypeToIndex(combatType)];
+				const int16_t &absorbPercent = it.abilities->absorbPercent[combatTypeToIndex(workingCombatType)];
 				if (absorbPercent != 0) {
 					totalAbsorbPercent += absorbPercent;
 				}
 
 				if (field) {
-					const int16_t &fieldAbsorbPercent = it.abilities->fieldAbsorbPercent[combatTypeToIndex(combatType)];
+					// const int16_t &fieldAbsorbPercent = it.abilities->fieldAbsorbPercent[combatTypeToIndex(combatType)];
+					const int16_t &fieldAbsorbPercent = it.abilities->fieldAbsorbPercent[combatTypeToIndex(workingCombatType)];
 					if (fieldAbsorbPercent != 0) {
 						totalAbsorbPercent += fieldAbsorbPercent;
 					}
