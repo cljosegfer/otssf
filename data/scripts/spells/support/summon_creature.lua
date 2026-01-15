@@ -11,19 +11,19 @@ function spell.onCastSpell(player, variant)
 		return false
 	end
 
-	if not player:hasFlag(PlayerFlag_CanSummonAll) then
-		if not monsterType:isSummonable() then
-			player:sendCancelMessage(RETURNVALUE_NOTPOSSIBLE)
-			position:sendMagicEffect(CONST_ME_POFF)
-			return false
-		end
+	-- if not player:hasFlag(PlayerFlag_CanSummonAll) then
+	-- 	if not monsterType:isSummonable() then
+	-- 		player:sendCancelMessage(RETURNVALUE_NOTPOSSIBLE)
+	-- 		position:sendMagicEffect(CONST_ME_POFF)
+	-- 		return false
+	-- 	end
 
-		if #player:getSummons() >= 2 then
-			player:sendCancelMessage("You cannot summon more creatures.")
-			position:sendMagicEffect(CONST_ME_POFF)
-			return false
-		end
-	end
+	-- 	if #player:getSummons() >= 2 then
+	-- 		player:sendCancelMessage("You cannot summon more creatures.")
+	-- 		position:sendMagicEffect(CONST_ME_POFF)
+	-- 		return false
+	-- 	end
+	-- end
 
 	local manaCost = monsterType:getManaCost()
 	if player:getMana() < manaCost and not player:hasFlag(PlayerFlag_HasInfiniteMana) then
