@@ -726,6 +726,12 @@ CombatDamage Combat::applyImbuementElementalDamage(const std::shared_ptr<Player>
     if (!item || !target) {
         return damage;
     }
+	// g_logger().warn("DEBUG: function applied: x | Type: {}", damage.primary.type);
+
+	if (damage.primary.type == COMBAT_HEALING) {
+		// g_logger().info("DEBUG: Healing detected!");
+		return damage;
+	}
 
     if (item->getWeaponType() == WEAPON_AMMO && attackerPlayer && attackerPlayer->getInventoryItem(CONST_SLOT_LEFT) != nullptr) {
         item = attackerPlayer->getInventoryItem(CONST_SLOT_LEFT);
@@ -735,6 +741,7 @@ CombatDamage Combat::applyImbuementElementalDamage(const std::shared_ptr<Player>
     int32_t basePhysicalDamage = damage.primary.value;
 
     for (uint8_t slotid = 0; slotid < item->getImbuementSlot(); slotid++) {
+		// g_logger().info("slotid if: basePhysicalDamage: {}", basePhysicalDamage);
         ImbuementInfo imbuementInfo;
         if (!item->getImbuementInfo(slotid, &imbuementInfo)) {
             continue;
@@ -748,30 +755,28 @@ CombatDamage Combat::applyImbuementElementalDamage(const std::shared_ptr<Player>
         // Calculate Extra Damage: Phys * (Percent/100) * (1 + ML/100)
         float scalingFactor = 1.0f + (attackerPlayer->getMagicLevel() * 0.01f);
         int32_t extraDamageValue = static_cast<int32_t>(basePhysicalDamage * (imbuementInfo.imbuement->elementDamage / 100.0f) * scalingFactor);
-
-        // If the secondary slot is empty, use it for the first element found
-        if (damage.secondary.type == COMBAT_NONE) {
-            damage.secondary.type = imbuementInfo.imbuement->combatType;
-            damage.secondary.value = extraDamageValue;
-        } else {
-            // Create a new damage packet and proc it immediately!
+		// g_logger().info("finish slotid if: scalingFactor: {}", scalingFactor);
+        if (extraDamageValue < 0) { // offensive dmg is negative
+			// g_logger().info("extraDamageValue if: Extra Damage: {} | Type: {}", extraDamageValue, imbuementInfo.imbuement->combatType);
+            // UNIFORM APPROACH: Every slot creates an independent packet
             CombatDamage extraPacket;
             extraPacket.primary.type = imbuementInfo.imbuement->combatType;
             extraPacket.primary.value = extraDamageValue;
             extraPacket.origin = damage.origin;
             
-            // Deal the extra damage packet
+            // Deal the extra damage packet (Independence from main hit blocks/armor)
             g_game().combatChangeHealth(attackerPlayer, target, extraPacket);
+
+            // Play the imbuement sound
+            if (imbuementInfo.imbuement->soundEffect != SoundEffect_t::SILENCE) {
+                g_game().sendSingleSoundEffect(item->getPosition(), imbuementInfo.imbuement->soundEffect, attackerPlayer);
+            }
         }
 
-        if (imbuementInfo.imbuement->soundEffect != SoundEffect_t::SILENCE) {
-            g_game().sendSingleSoundEffect(item->getPosition(), imbuementInfo.imbuement->soundEffect, attackerPlayer);
-        }
-        
-        // If damage imbuement is set, we can return without checking other slots
+		// If damage imbuement is set, we can return without checking other slots
 		// break;
     }
-
+	// g_logger().warn("---------------------");
     return damage;
 }
 
