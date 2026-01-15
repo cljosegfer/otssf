@@ -1460,10 +1460,11 @@ int MonsterTypeFunctions::luaMonsterTypeCorpseId(lua_State* L) {
 
 int MonsterTypeFunctions::luaMonsterTypeManaCost(lua_State* L) {
 	// get: monsterType:manaCost() set: monsterType:manaCost(mana)
+	// g_logger().warn("DEBUG: Healing detected!");
 	const auto &monsterType = Lua::getUserdataShared<MonsterType>(L, 1, "MonsterType");
 	if (monsterType) {
 		if (lua_gettop(L) == 1) {
-			lua_pushnumber(L, monsterType->info.manaCost);
+			lua_pushnumber(L, monsterType->info.health);
 		} else {
 			monsterType->info.manaCost = Lua::getNumber<uint32_t>(L, 2);
 			Lua::pushBoolean(L, true);
