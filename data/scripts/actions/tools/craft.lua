@@ -43,7 +43,8 @@ local function getValidPool(target)
     local pool = {}
     
     -- 1. WEAPONS
-    if (wType > 0 and wType ~= WEAPON_SHIELD) then
+    local isQuiver = it:getName():lower():find("quiver")
+    if (wType > 0 and wType ~= WEAPON_SHIELD) or isQuiver then
         addIdsToPool(pool, CAT_DATA.ELEMENTAL_DMG)
         addIdsToPool(pool, CAT_DATA.LIFE_LEECH)
         addIdsToPool(pool, CAT_DATA.MANA_LEECH)
@@ -51,15 +52,36 @@ local function getValidPool(target)
         if wType == WEAPON_SWORD then addIdsToPool(pool, CAT_DATA.SWORD)
         elseif wType == WEAPON_AXE then addIdsToPool(pool, CAT_DATA.AXE)
         elseif wType == WEAPON_CLUB then addIdsToPool(pool, CAT_DATA.CLUB)
-        elseif wType == WEAPON_DISTANCE then addIdsToPool(pool, CAT_DATA.DISTANCE)
+        elseif wType == WEAPON_DISTANCE or isQuiver then addIdsToPool(pool, CAT_DATA.DISTANCE)
         elseif wType == WEAPON_WAND then addIdsToPool(pool, CAT_DATA.MAGIC_LVL) end
         return pool
     end
 
+-- SLOTP_WHEREEVER = 0xFFFFFFFF,
+-- SLOTP_HEAD = 1 << 0,
+-- SLOTP_NECKLACE = 1 << 1,
+-- SLOTP_BACKPACK = 1 << 2,
+-- SLOTP_ARMOR = 1 << 3,
+-- SLOTP_RIGHT = 1 << 4,
+-- SLOTP_LEFT = 1 << 5,
+-- SLOTP_LEGS = 1 << 6,
+-- SLOTP_FEET = 1 << 7,
+-- SLOTP_RING = 1 << 8,
+-- SLOTP_AMMO = 1 << 9,
+-- SLOTP_DEPOT = 1 << 10,
+-- SLOTP_TWO_HAND = 1 << 11,
+-- SLOTP_HAND = (SLOTP_LEFT | SLOTP_RIGHT)
     -- 2. DEFENSIVE / UTILITY
-    local isDefensive = (bit.band(slotPos, 1) ~= 0 or bit.band(slotPos, 4) ~= 0 or 
-                         bit.band(slotPos, 32) ~= 0 or bit.band(slotPos, 64) ~= 0 or 
-                         wType == WEAPON_SHIELD or it:isContainer())
+    local isDefensive = (
+        bit.band(slotPos, 1) ~= 0 or   -- Head
+        bit.band(slotPos, 2) ~= 0 or   -- Necklace (Amulet)
+        bit.band(slotPos, 8) ~= 0 or   -- Armor
+        bit.band(slotPos, 64) ~= 0 or  -- Legs
+        bit.band(slotPos, 128) ~= 0 or -- Feet (Boots)
+        bit.band(slotPos, 256) ~= 0 or -- Ring
+        wType == WEAPON_SHIELD or 
+        it:isContainer()               -- Backpacks
+    )
 
     if isDefensive then
         addIdsToPool(pool, CAT_DATA.PROT_DEATH)
@@ -78,7 +100,7 @@ local function getValidPool(target)
             addIdsToPool(pool, CAT_DATA.CLUB)
             addIdsToPool(pool, CAT_DATA.DISTANCE)
         end
-        if bit.band(slotPos, 64) ~= 0 then addIdsToPool(pool, CAT_DATA.SPEED) end
+        if bit.band(slotPos, 128) ~= 0 then addIdsToPool(pool, CAT_DATA.SPEED) end
         if it:isContainer() then addIdsToPool(pool, CAT_DATA.CAPACITY) end
     end
     

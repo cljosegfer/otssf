@@ -6851,7 +6851,8 @@
 		<attribute key="showCharges" value="1"/>
 		<attribute key="showAttributes" value="1"/>
 		<attribute key="absorbpercentenergy" value="10"/>
-		<attribute key="charges" value="200"/>
+		<!-- <attribute key="charges" value="200"/> -->
+		<attribute key="imbuementslot" value="1"/>
 		<attribute key="weight" value="290"/>
 		<attribute key="script" value="moveevent">
 			<attribute key="slot" value="necklace"/>
@@ -6944,7 +6945,8 @@
 		<attribute key="showCharges" value="1"/>
 		<attribute key="showAttributes" value="1"/>
 		<attribute key="absorbpercentpoison" value="10"/>
-		<attribute key="charges" value="200"/>
+		<!-- <attribute key="charges" value="200"/> -->
+		<attribute key="imbuementslot" value="1"/>
 		<attribute key="weight" value="500"/>
 		<attribute key="script" value="moveevent">
 			<attribute key="slot" value="necklace"/>
@@ -7267,7 +7269,8 @@
 		<attribute key="showCharges" value="1"/>
 		<attribute key="showAttributes" value="1"/>
 		<attribute key="absorbpercentlifedrain" value="20"/>
-		<attribute key="charges" value="150"/>
+		<!-- <attribute key="charges" value="150"/> -->
+		<attribute key="imbuementslot" value="1"/>
 		<attribute key="weight" value="380"/>
 		<attribute key="script" value="moveevent">
 			<attribute key="slot" value="necklace"/>
@@ -7342,9 +7345,10 @@
 		<attribute key="managain" value="8"/>
 		<attribute key="healthticks" value="6000"/>
 		<attribute key="healthgain" value="2"/>
-		<attribute key="duration" value="1200"/>
+		<!-- <attribute key="duration" value="1200"/>
 		<attribute key="transformdeequipto" value="3052"/>
-		<attribute key="decayTo" value="0"/>
+		<attribute key="decayTo" value="0"/> -->
+		<attribute key="imbuementslot" value="1"/>
 		<attribute key="weight" value="80"/>
 		<attribute key="script" value="moveevent">
 			<attribute key="slot" value="ring"/>
@@ -7451,9 +7455,10 @@
 		<attribute key="suppressdrunk" value="1"/>
 		<attribute key="showduration" value="1"/>
 		<attribute key="showAttributes" value="1"/>
-		<attribute key="duration" value="3600"/>
+		<!-- <attribute key="duration" value="3600"/>
 		<attribute key="transformdeequipto" value="3097"/>
-		<attribute key="decayTo" value="0"/>
+		<attribute key="decayTo" value="0"/> -->
+		<attribute key="imbuementslot" value="1"/>
 		<attribute key="weight" value="110"/>
 		<attribute key="script" value="moveevent">
 			<attribute key="slot" value="ring"/>
@@ -66036,6 +66041,7 @@ former students at the Noodles Academy. Awarded by TibiaLabs.com"/>
 		<attribute key="primarytype" value="quivers"/>
 		<attribute key="slotType" value="right-hand"/>
 		<attribute key="containersize" value="6"/>
+		<attribute key="imbuementslot" value="1"/>
 		<attribute key="weight" value="1700"/>
 		<attribute key="script" value="moveevent">
 			<attribute key="slot" value="right-hand"/>
