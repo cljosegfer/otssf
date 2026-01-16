@@ -6907,8 +6907,12 @@ uint16_t Player::getSkillLevel(skills_t skill) const {
 
 	// Treat varSkills as a percentage increase of baseSkill
 	int32_t skillLevel = baseSkill;
-	if (modifier != 0) {
-		skillLevel += static_cast<int32_t>(baseSkill * (modifier / 100.0));
+	if (skill <= SKILL_FISHING || skill == SKILL_MAGLEVEL) {
+		if (modifier != 0) {
+			skillLevel += static_cast<int32_t>(baseSkill * (modifier / 100.0));
+		}
+	} else {
+		skillLevel += modifier;
 	}
 
 	const auto &maxValuePerSkill = getMaxValuePerSkill();

@@ -7907,12 +7907,14 @@ void Game::applyCharmRune(
 void Game::applyManaLeech(
 	const std::shared_ptr<Player> &attackerPlayer, const std::shared_ptr<Monster> &targetMonster, const std::shared_ptr<Creature> &target, const CombatDamage &damage, const int32_t &realDamage
 ) const {
+	// g_logger().warn("debug: mana leech");
 	// Wheel of destiny bonus - mana leech chance and amount
 	auto wheelLeechChance = attackerPlayer->wheel().checkDrainBodyLeech(target, SKILL_MANA_LEECH_CHANCE);
 	auto wheelLeechAmount = attackerPlayer->wheel().checkDrainBodyLeech(target, SKILL_MANA_LEECH_AMOUNT);
 
 	uint16_t manaChance = attackerPlayer->getSkillLevel(SKILL_MANA_LEECH_CHANCE) + wheelLeechChance + damage.manaLeechChance;
 	uint16_t manaSkill = attackerPlayer->getSkillLevel(SKILL_MANA_LEECH_AMOUNT) + wheelLeechAmount + damage.manaLeech;
+	// g_logger().info("manaChance {} manaSkill {}", manaChance, manaSkill);
 	if (normal_random(0, 100) >= manaChance) {
 		return;
 	}
@@ -7930,7 +7932,7 @@ void Game::applyManaLeech(
 	tmpDamage.origin = ORIGIN_SPELL;
 	tmpDamage.primary.type = COMBAT_MANADRAIN;
 	tmpDamage.primary.value = calculateLeechAmount(realDamage, manaSkill, affected);
-
+	// g_logger().info("mana leech amount {}", tmpDamage.primary.value);
 	Combat::doCombatMana(nullptr, attackerPlayer, tmpDamage, tmpParams);
 }
 
@@ -7938,11 +7940,13 @@ void Game::applyManaLeech(
 void Game::applyLifeLeech(
 	const std::shared_ptr<Player> &attackerPlayer, const std::shared_ptr<Monster> &targetMonster, const std::shared_ptr<Creature> &target, const CombatDamage &damage, const int32_t &realDamage
 ) const {
+	// g_logger().warn("DEBUG: life leech");
 	// Wheel of destiny bonus - life leech chance and amount
 	auto wheelLeechChance = attackerPlayer->wheel().checkDrainBodyLeech(target, SKILL_LIFE_LEECH_CHANCE);
 	auto wheelLeechAmount = attackerPlayer->wheel().checkDrainBodyLeech(target, SKILL_LIFE_LEECH_AMOUNT);
 	uint16_t lifeChance = attackerPlayer->getSkillLevel(SKILL_LIFE_LEECH_CHANCE) + wheelLeechChance + damage.lifeLeechChance;
 	uint16_t lifeSkill = attackerPlayer->getSkillLevel(SKILL_LIFE_LEECH_AMOUNT) + wheelLeechAmount + damage.lifeLeech;
+	// g_logger().info("lifeChance {} lifeSkill {}", lifeChance, lifeSkill);
 	if (normal_random(0, 100) >= lifeChance) {
 		return;
 	}
@@ -7959,7 +7963,7 @@ void Game::applyLifeLeech(
 	tmpDamage.origin = ORIGIN_SPELL;
 	tmpDamage.primary.type = COMBAT_HEALING;
 	tmpDamage.primary.value = calculateLeechAmount(realDamage, lifeSkill, affected);
-
+	// g_logger().info("life leech amount {}", tmpDamage.primary.value);
 	Combat::doCombatHealth(nullptr, attackerPlayer, tmpDamage, tmpParams);
 }
 
