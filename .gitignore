@@ -5,6 +5,7 @@
 
 client/
 data/data-otservbr-global
+draft.sql
 
 # User-specific files
 *.rsuser
