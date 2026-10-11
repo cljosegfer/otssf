@@ -636,8 +636,16 @@ function Player:onGainSkillTries(skill, tries)
 		skillRate = skillRate + (skillRate * (vipBonusSkill / 100))
 	end
 
-	-- Calculate and return the final experience gain
-	return tries * skillRate
+	-- Character level bonus: +1% skill/magic progress per level
+	skillRate = skillRate * (1 + self:getLevel() / 100)
+
+	-- Round randomly so fractional gains (e.g. 1 melee try * 1.1) keep their average
+	local total = tries * skillRate
+	local whole = math.floor(total)
+	if math.random() < total - whole then
+		whole = whole + 1
+	end
+	return whole
 end
 
 function Player:onCombat(target, item, primaryDamage, primaryType, secondaryDamage, secondaryType)
