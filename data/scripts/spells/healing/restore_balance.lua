@@ -21,7 +21,7 @@ end
 spell:name("Restore Balance")
 spell:words("exura tio sio")
 spell:group("healing")
-spell:vocation("monk;true", "exalted monk;true")
+-- spell:vocation("monk;true", "exalted monk;true")
 spell:castSound(SOUND_EFFECT_TYPE_SPELL_HEAL_FRIEND)
 spell:id(297)
 spell:cooldown(2 * 1000)

@@ -21,7 +21,7 @@ end
 spell:name("Spirit Mend")
 spell:words("exura gran tio")
 spell:group("healing")
-spell:vocation("monk;true", "exalted monk;true")
+-- spell:vocation("monk;true", "exalted monk;true")
 spell:castSound(SOUND_EFFECT_TYPE_SPELL_DIVINE_HEALING)
 spell:id(273)
 spell:cooldown(1000)

@@ -73,7 +73,7 @@ end
 spell:name("Enlighten Party")
 spell:words("utevo mas sio")
 spell:group("support")
-spell:vocation("monk;true", "exalted monk;true")
+-- spell:vocation("monk;true", "exalted monk;true")
 spell:castSound(SOUND_EFFECT_TYPE_SPELL_HEAL_PARTY)
 spell:id(278)
 spell:cooldown(5 * 60 * 1000)

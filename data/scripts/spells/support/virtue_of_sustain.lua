@@ -17,7 +17,7 @@ end
 spell:name("Virtue of Sustain")
 spell:words("utura tio")
 spell:group("support", "virtue")
-spell:vocation("monk;true", "exalted monk;true")
+-- spell:vocation("monk;true", "exalted monk;true")
 spell:castSound(SOUND_EFFECT_TYPE_SPELL_PROTECTOR)
 spell:id(276)
 spell:cooldown(10 * 1000)

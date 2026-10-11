@@ -22,7 +22,7 @@ end
 spell:name("Balanced Brawl")
 spell:words("exori mas res")
 spell:group("support")
-spell:vocation("monk;true", "exalted monk;true")
+-- spell:vocation("monk;true", "exalted monk;true")
 spell:castSound(SOUND_EFFECT_TYPE_SPELL_CHALLENGE)
 spell:id(280)
 spell:cooldown(10 * 1000)

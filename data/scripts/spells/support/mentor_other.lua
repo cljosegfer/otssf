@@ -64,7 +64,7 @@ end
 spell:name("Mentor Other")
 spell:words("uteta tio")
 spell:group("support")
-spell:vocation("monk;true", "exalted monk;true")
+-- spell:vocation("monk;true", "exalted monk;true")
 spell:castSound(SOUND_EFFECT_TYPE_SPELL_HEAL_FRIEND)
 spell:id(277)
 spell:cooldown(50 * 1000)

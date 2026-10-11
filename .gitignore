@@ -13,6 +13,7 @@
 client/
 draft.sql
 output.log
+tools/output/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

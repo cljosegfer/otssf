@@ -39,7 +39,7 @@ end
 spell:name("Virtue of Justice")
 spell:words("utito virtu")
 spell:group("support", "virtue")
-spell:vocation("monk;true", "exalted monk;true")
+-- spell:vocation("monk;true", "exalted monk;true")
 spell:castSound(SOUND_EFFECT_TYPE_SPELL_PROTECTOR)
 spell:id(275)
 spell:cooldown(10 * 1000)

@@ -20,7 +20,7 @@ end
 spell:name("Practise Healing")
 spell:words("exura dis")
 spell:group("healing")
-spell:vocation("none")
+-- spell:vocation("none")
 spell:castSound(SOUND_EFFECT_TYPE_SPELL_PRACTISE_HEALING)
 spell:id(166)
 spell:cooldown(1 * 1000)

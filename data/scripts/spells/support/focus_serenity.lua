@@ -17,7 +17,7 @@ end
 spell:name("Focus Serenity")
 spell:words("utamo tio")
 spell:group("support")
-spell:vocation("monk;true", "exalted monk;true")
+-- spell:vocation("monk;true", "exalted monk;true")
 spell:castSound(SOUND_EFFECT_TYPE_SPELL_ULTIMATE_LIGHT)
 spell:id(281)
 spell:cooldown(10 * 60 * 1000) -- 10 minutes
