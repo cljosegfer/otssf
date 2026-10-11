@@ -10,6 +10,9 @@
 *.dll
 *.userosscache
 *.sln.docstates
+client/
+draft.sql
+output.log
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
