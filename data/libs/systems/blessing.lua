@@ -80,16 +80,9 @@ Blessings.DebugPrint = function(content, pre, pos)
 end
 
 Blessings.PlayerDeath = function(player, corpse, killer)
-	local hasAol = (player:getSlotItem(CONST_SLOT_NECKLACE) and player:getSlotItem(CONST_SLOT_NECKLACE):getId() == ITEM_AMULETOFLOSS)
 	local hasSkull = table.contains({ SKULL_RED, SKULL_BLACK }, player:getSkull())
-	local currBlessCount = player:getBlessings()
 
-	if hasSkull then
-		Blessings.DropLoot(player, corpse, 100, true)
-	elseif #currBlessCount < 5 and not hasAol then
-		local equipLossChance = Blessings.LossPercent[#currBlessCount].item
-		Blessings.DropLoot(player, corpse, equipLossChance)
-	end
+	Blessings.DropLoot(player, corpse, hasSkull)
 
 	if not player:getSlotItem(CONST_SLOT_BACKPACK) then
 		player:addItem(ITEM_BAG, 1, false, CONST_SLOT_BACKPACK)
@@ -98,23 +91,12 @@ Blessings.PlayerDeath = function(player, corpse, killer)
 	return true
 end
 
-Blessings.DropLoot = function(player, corpse, chance, skulled)
-	local multiplier = 100
-	math.randomseed(os.time())
-	chance = chance * multiplier
-	Blessings.DebugPrint("DropLoot chance " .. chance)
-	for i = CONST_SLOT_HEAD, CONST_SLOT_AMMO do
-		local item = player:getSlotItem(i)
-		if item then
-			local thisChance = item:isContainer() and chance or (chance / 10)
-			local thisRandom = math.random(100 * multiplier)
-
-			Blessings.DebugPrint(thisChance / multiplier .. "%" .. " | thisRandom " .. thisRandom / multiplier .. "%", "DropLoot item " .. item:getName() .. " |")
-			if skulled or thisRandom <= thisChance then
-				Blessings.DebugPrint("Dropped " .. item:getName())
-				item:moveTo(corpse)
-			end
-		end
+-- Always drops the backpack (and only the backpack), regardless of blessings, amulet of loss or skull
+Blessings.DropLoot = function(player, corpse, skulled)
+	local backpack = player:getSlotItem(CONST_SLOT_BACKPACK)
+	if backpack then
+		Blessings.DebugPrint("Dropped " .. backpack:getName())
+		backpack:moveTo(corpse)
 	end
 
 	if skulled and Blessings.Config.SkulledDeathLoseStoreItem then
