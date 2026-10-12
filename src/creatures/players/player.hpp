@@ -311,6 +311,9 @@ public:
 	bool hasAnyMount() const;
 	uint8_t getRandomMountId() const;
 	void dismount();
+	bool isMountBlockedByCombat() const;
+	void applyMountSpeedBonus();
+	void removeMountSpeedBonus();
 
 	uint16_t getDodgeChance() const;
 
@@ -1739,6 +1742,8 @@ private:
 	mutable bool m_lastKillTimeCached = false;
 	int64_t lastWalkthroughAttempt = 0;
 	int64_t lastToggleMount = 0;
+	// Speed granted by the active mount, removed exactly on dismount.
+	int32_t mountSpeedBonus = 0;
 	int64_t lastUIInteraction = 0;
 	int64_t lastPing;
 	int64_t lastPong;

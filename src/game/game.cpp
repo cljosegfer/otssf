@@ -7285,14 +7285,12 @@ void Game::playerChangeOutfit(const std::shared_ptr<Player> &player, Outfit_t ou
 		const bool blockedInProtectionZone = !g_configManager().getBoolean(TOGGLE_MOUNT_IN_PZ) && playerTile->hasFlag(TILESTATE_PROTECTIONZONE);
 		if (blockedInProtectionZone) {
 			outfit.lookMount = 0;
+		} else if (!player->isMounted() && player->isMountBlockedByCombat()) {
+			player->sendCancelMessage("You may not mount while in combat.");
+			outfit.lookMount = 0;
 		} else {
-			auto deltaSpeedChange = mount->speed;
-			const auto prevMount = player->isMounted() ? mounts->getMountByID(player->getCurrentMount()) : nullptr;
-
-			if (prevMount) {
-				deltaSpeedChange -= prevMount->speed;
-			}
-			changeSpeed(player, deltaSpeedChange);
+			// Switching between mounts keeps the bonus already granted.
+			player->applyMountSpeedBonus();
 		}
 
 		player->setCurrentMount(mount->id);

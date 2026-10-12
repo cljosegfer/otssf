@@ -7988,6 +7988,11 @@ bool Player::toggleMount(bool mount) {
 			return false;
 		}
 
+		if (isMountBlockedByCombat()) {
+			sendCancelMessage("You may not mount while in combat.");
+			return false;
+		}
+
 		const auto &tile = getTile();
 		if (!g_configManager().getBoolean(TOGGLE_MOUNT_IN_PZ) && !group->access && tile && tile->hasFlag(TILESTATE_PROTECTIONZONE)) {
 			sendCancelMessage(RETURNVALUE_ACTIONNOTPERMITTEDINPROTECTIONZONE);
@@ -8035,9 +8040,7 @@ bool Player::toggleMount(bool mount) {
 		setCurrentMount(currentMount->id);
 		kv()->set("last-mount", currentMount->id);
 
-		if (currentMount->speed != 0) {
-			g_game().changeSpeed(static_self_cast<Player>(), currentMount->speed);
-		}
+		applyMountSpeedBonus();
 	} else {
 		if (!isMounted()) {
 			return false;
@@ -8119,12 +8122,37 @@ bool Player::hasMount(const std::shared_ptr<Mount> &mount) const {
 }
 
 void Player::dismount() {
-	const auto &mount = g_game().mounts->getMountByID(getCurrentMount());
-	if (mount && mount->speed > 0) {
-		g_game().changeSpeed(static_self_cast<Player>(), -mount->speed);
+	removeMountSpeedBonus();
+	defaultOutfit.lookMount = 0;
+}
+
+bool Player::isMountBlockedByCombat() const {
+	return !group->access && hasCondition(CONDITION_INFIGHT);
+}
+
+void Player::applyMountSpeedBonus() {
+	if (mountSpeedBonus != 0) {
+		return;
 	}
 
-	defaultOutfit.lookMount = 0;
+	// Mounting adds +200% of the current speed. Stay below PLAYER_MAX_SPEED,
+	// because Creature::setSpeed ignores every change once the cap is reached,
+	// which would make the bonus impossible to remove on dismount.
+	const int32_t currentSpeed = getSpeed();
+	const int32_t headroom = std::max<int32_t>(0, static_cast<int32_t>(PLAYER_MAX_SPEED) - 1 - currentSpeed);
+	mountSpeedBonus = std::min<int32_t>(currentSpeed * 2, headroom);
+	if (mountSpeedBonus != 0) {
+		g_game().changeSpeed(static_self_cast<Player>(), mountSpeedBonus);
+	}
+}
+
+void Player::removeMountSpeedBonus() {
+	if (mountSpeedBonus == 0) {
+		return;
+	}
+
+	g_game().changeSpeed(static_self_cast<Player>(), -mountSpeedBonus);
+	mountSpeedBonus = 0;
 }
 
 bool Player::addOfflineTrainingTries(skills_t skill, uint64_t tries) {
