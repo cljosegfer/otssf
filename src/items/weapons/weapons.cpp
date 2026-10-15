@@ -712,7 +712,7 @@ bool WeaponDistance::useWeapon(const std::shared_ptr<Player> &player, const std:
 	int32_t damageY = player->getPerfectShotDamage(distanceY);
 
 	if (it.weaponType == WEAPON_DISTANCE) {
-		const auto &quiver = player->getInventoryItem(CONST_SLOT_RIGHT);
+		const auto &quiver = player->getActiveQuiver();
 		if (quiver && quiver->getWeaponType()) {
 			if (quiver->getPerfectShotRange() == distanceX) {
 				damageX -= quiver->getPerfectShotDamage();

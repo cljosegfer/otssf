@@ -433,12 +433,32 @@ bool Player::hasWeaponDistanceEquipped() const {
 	return item && item->getWeaponType() == WEAPON_DISTANCE;
 }
 
-std::shared_ptr<Item> Player::getQuiverAmmoOfType(const ItemType &it) const {
-	if (!hasQuiverEquipped()) {
+// Equipped quiver, or the first quiver at the top level of the personal backpack in the ammo slot
+std::shared_ptr<Item> Player::getActiveQuiver() const {
+	if (hasQuiverEquipped()) {
+		return inventory[CONST_SLOT_RIGHT];
+	}
+
+	const auto &ammoItem = inventory[CONST_SLOT_AMMO];
+	const auto &personalBackpack = ammoItem ? ammoItem->getContainer() : nullptr;
+	if (!personalBackpack) {
 		return nullptr;
 	}
 
-	const auto &quiver = inventory[CONST_SLOT_RIGHT];
+	for (const auto &item : personalBackpack->getItemList()) {
+		if (item->isQuiver() && item->getContainer()) {
+			return item;
+		}
+	}
+	return nullptr;
+}
+
+std::shared_ptr<Item> Player::getQuiverAmmoOfType(const ItemType &it) const {
+	const auto &quiver = getActiveQuiver();
+	if (!quiver) {
+		return nullptr;
+	}
+
 	for (const auto &container = quiver->getContainer();
 	     const auto &ammoItem : container->getItemList()) {
 		if (ammoItem->getAmmoType() == it.ammoType) {

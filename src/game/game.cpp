@@ -4196,19 +4196,40 @@ void Game::playerEquipItem(uint32_t playerId, uint16_t itemId, bool hasTier /* =
 		return;
 	}
 
+	// Search the personal backpack in the ammo slot first, then the main backpack
+	const auto &ammoItem = player->getInventoryItem(CONST_SLOT_AMMO);
+	const auto &personalBackpack = ammoItem ? ammoItem->getContainer() : nullptr;
 	const auto &item = player->getInventoryItem(CONST_SLOT_BACKPACK);
 	const auto &backpack = item ? item->getContainer() : nullptr;
 
 	const auto &slotItem = player->getInventoryItem(slot);
-	auto equipItem = searchForItem(backpack, it.id, hasTier, tier);
+	auto equipItem = searchForItem(personalBackpack, it.id, hasTier, tier);
+	if (!equipItem) {
+		equipItem = searchForItem(backpack, it.id, hasTier, tier);
+	}
 	if (!equipItem) {
 		const auto &lootPouch = player->getLootPouch();
 		equipItem = searchForItem(lootPouch, it.id, hasTier, tier);
 	}
 	ReturnValue ret = RETURNVALUE_NOERROR;
 
+	// Stow an unequipped item in the personal backpack first, then managed containers, then anywhere
+	const auto stowItem = [this, &player, &personalBackpack](const std::shared_ptr<Item> &stowedItem) {
+		ReturnValue stowRet = RETURNVALUE_NOTPOSSIBLE;
+		if (personalBackpack) {
+			stowRet = internalMoveItem(stowedItem->getParent(), personalBackpack, INDEX_WHEREEVER, stowedItem, stowedItem->getItemCount(), nullptr);
+		}
+		if (stowRet != RETURNVALUE_NOERROR) {
+			stowRet = internalCollectManagedItems(player, stowedItem, getObjectCategory(stowedItem), false);
+		}
+		if (stowRet != RETURNVALUE_NOERROR) {
+			stowRet = internalMoveItem(stowedItem->getParent(), player, INDEX_WHEREEVER, stowedItem, stowedItem->getItemCount(), nullptr);
+		}
+		return stowRet;
+	};
+
 	if (slotItem && slotItem->getID() == it.id && (!hasTier || slotItem->getTier() == tier)) {
-		ret = internalCollectManagedItems(player, slotItem, getObjectCategory(slotItem), false);
+		ret = stowItem(slotItem);
 	} else if (equipItem) {
 		// Shield slot item
 		const auto &rightItem = player->getInventoryItem(CONST_SLOT_RIGHT);
@@ -4231,13 +4252,17 @@ void Game::playerEquipItem(uint32_t playerId, uint16_t itemId, bool hasTier /* =
 				&& !rightItem->isQuiver()
 				&& (!leftItem || leftItem->getWeaponType() != WEAPON_DISTANCE)
 			) {
-				ret = internalCollectManagedItems(player, rightItem, getObjectCategory(rightItem), false);
+				ret = stowItem(rightItem);
+				if (ret != RETURNVALUE_NOERROR) {
+					player->sendCancelMessage(ret);
+					return;
+				}
 			}
 
 			// Check if trying to equip a quiver while another quiver is already equipped in the right slot
 			if (slot == CONST_SLOT_RIGHT && rightItem && rightItem->isQuiver() && it.isQuiver()) {
 				// Replace the existing quiver with the new one
-				ret = internalMoveItem(rightItem->getParent(), player, INDEX_WHEREEVER, rightItem, rightItem->getItemCount(), nullptr);
+				ret = stowItem(rightItem);
 				if (ret != RETURNVALUE_NOERROR) {
 					player->sendCancelMessage(ret);
 					return;
@@ -4246,7 +4271,7 @@ void Game::playerEquipItem(uint32_t playerId, uint16_t itemId, bool hasTier /* =
 				// Check if trying to equip a shield while a two-handed weapon is equipped in the left slot
 				if (slot == CONST_SLOT_RIGHT && leftItem && leftItem->getSlotPosition() & SLOTP_TWO_HAND) {
 					// Unequip the two-handed weapon from the left slot
-					ret = internalMoveItem(leftItem->getParent(), player, INDEX_WHEREEVER, leftItem, leftItem->getItemCount(), nullptr);
+					ret = stowItem(leftItem);
 					if (ret != RETURNVALUE_NOERROR) {
 						player->sendCancelMessage(ret);
 						return;
@@ -4255,10 +4280,10 @@ void Game::playerEquipItem(uint32_t playerId, uint16_t itemId, bool hasTier /* =
 			}
 
 			if (slotItem) {
-				ret = internalCollectManagedItems(player, slotItem, getObjectCategory(slotItem), false);
-				// If the item is not collected, move it to any available container slot
+				ret = stowItem(slotItem);
 				if (ret != RETURNVALUE_NOERROR) {
-					ret = internalMoveItem(slotItem->getParent(), player, INDEX_WHEREEVER, slotItem, slotItem->getItemCount(), nullptr);
+					player->sendCancelMessage(ret);
+					return;
 				}
 			}
 
@@ -8499,7 +8524,7 @@ bool Game::combatChangeHealth(const std::shared_ptr<Creature> &attacker, const s
 				int32_t damageY = attackerPlayer->getPerfectShotDamage(distanceY, true);
 				const auto &item = attackerPlayer->getWeapon();
 				if (item && item->getWeaponType() == WEAPON_DISTANCE) {
-					const auto &quiver = attackerPlayer->getInventoryItem(CONST_SLOT_RIGHT);
+					const auto &quiver = attackerPlayer->getActiveQuiver();
 					if (quiver && quiver->getWeaponType()) {
 						if (quiver->getPerfectShotRange() == distanceX) {
 							damageX -= quiver->getPerfectShotDamage();
