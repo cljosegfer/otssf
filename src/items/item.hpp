@@ -717,14 +717,8 @@ public:
 		return setImbuement(slot, imbuementId, 0);
 	}
 	void setImbuement(uint8_t slot, uint16_t imbuementId, uint32_t duration);
-	bool hasImbuementType(ImbuementTypes_t imbuementType, uint16_t imbuementTier) const {
-		const auto it = items[id].imbuementTypes.find(imbuementType);
-		if (it != items[id].imbuementTypes.end()) {
-			return (it->second >= imbuementTier);
-		}
-		return false;
-	}
-	bool hasImbuementCategoryId(uint16_t categoryId) const;
+	bool hasImbuementType(ImbuementTypes_t imbuementType, uint16_t imbuementTier) const;
+	bool hasConflictingImbuement(const Imbuement* imbuement) const;
 	bool hasImbuementAttribute(const std::string &attributeSlot) const;
 	int8_t getFreeImbuementSlot() const;
 	bool hasImbuements() const {

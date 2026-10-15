@@ -18057,25 +18057,28 @@
 	</item>
 	<item id="6547" article="a" name="yellow powder">
 		<attribute key="primarytype" value="rubbish"/>
+		<attribute key="description" value="[HOLY]"/>
 		<attribute key="showCount" value="0"/>
 		<attribute key="weight" value="100"/>
 	</item>
 	<item id="6548" article="a" name="purple powder">
 		<attribute key="primarytype" value="rubbish"/>
+		<attribute key="description" value="[ENERGY]"/>
 		<attribute key="weight" value="100"/>
 	</item>
 	<item id="6549" article="a" name="green powder">
 		<attribute key="primarytype" value="rubbish"/>
+		<attribute key="description" value="[EARTH]"/>
 		<attribute key="weight" value="100"/>
 	</item>
 	<item id="6550" article="a" name="red powder">
 		<attribute key="primarytype" value="rubbish"/>
-		<attribute key="description" value="It reeks of hatred and malice."/>
+		<attribute key="description" value="[FIRE] It reeks of hatred and malice."/>
 		<attribute key="weight" value="100"/>
 	</item>
 	<item id="6551" article="a" name="blue powder">
 		<attribute key="primarytype" value="rubbish"/>
-		<attribute key="description" value="Sun can be a merciless killer, but so can you."/>
+		<attribute key="description" value="[ICE] Sun can be a merciless killer, but so can you."/>
 		<attribute key="weight" value="100"/>
 	</item>
 	<item id="6552" article="a" name="dead defiler">
@@ -43023,7 +43026,7 @@ My sad story is told by few living humans but many dead warriors"/>
 	</item>
 	<item id="21837" article="a" name="fungus powder">
 		<attribute key="primarytype" value="quest items"/>
-		<attribute key="description" value="Gloothworms love it"/>
+		<attribute key="description" value="[DEATH] Gloothworms love it"/>
 		<attribute key="weight" value="500"/>
 	</item>
 	<item id="21838" article="a" name="vial of distilled water">
@@ -44915,7 +44918,7 @@ Awarded by TibiaMisterios.com.br"/>
 	</item>
 	<item id="22660" article="a" name="grey-blue powder">
 		<attribute key="primarytype" value="quest items"/>
-		<attribute key="description" value="It is made of voodoo lily pollen and dragon egg shells"/>
+		<attribute key="description" value="[POWERFUL] It is made of voodoo lily pollen and dragon egg shells"/>
 		<attribute key="weight" value="10"/>
 	</item>
 	<item id="22661" article="a" name="flask of greasy red oil">
@@ -56556,14 +56559,17 @@ hands of its owner. Granted by TibiaRoyal.com"/>
 	</item>
 	<item id="30187" article="a" name="versicolour fireworks powder">
 		<attribute key="primarytype" value="creature products"/>
+		<attribute key="description" value="[INTRICATE]"/>
 		<attribute key="weight" value="100"/>
 	</item>
 	<item id="30188" article="a" name="red fireworks powder">
 		<attribute key="primarytype" value="party items"/>
+		<attribute key="description" value="[HEALTH]"/>
 		<attribute key="weight" value="100"/>
 	</item>
 	<item id="30189" article="a" name="yellow fireworks powder">
 		<attribute key="primarytype" value="party items"/>
+		<attribute key="description" value="[SPEED]"/>
 		<attribute key="weight" value="100"/>
 	</item>
 	<item id="30190" article="a" name="green fireworks powder">
@@ -56572,6 +56578,7 @@ hands of its owner. Granted by TibiaRoyal.com"/>
 	</item>
 	<item id="30191" article="a" name="blue fireworks powder">
 		<attribute key="primarytype" value="party items"/>
+		<attribute key="description" value="[MANA]"/>
 		<attribute key="weight" value="100"/>
 	</item>
 	<item id="30192" article="a" name="percht skull">
@@ -56876,10 +56883,12 @@ hands of its owner. Granted by TibiaRoyal.com"/>
 	</item>
 	<item id="30268" article="an" name="orange fireworks powder">
 		<attribute key="primarytype" value="party items"/>
+		<attribute key="description" value="[CRIT]"/>
 		<attribute key="weight" value="100"/>
 	</item>
 	<item id="30269" article="a" name="purple fireworks powder">
 		<attribute key="primarytype" value="party items"/>
+		<attribute key="description" value="[SKILL]"/>
 		<attribute key="weight" value="100"/>
 	</item>
 	<item id="30270" article="a" name="turquoise fireworks powder">

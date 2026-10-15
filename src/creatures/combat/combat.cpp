@@ -826,7 +826,6 @@ void Combat::CombatHealthFunc(const std::shared_ptr<Creature> &caster, const std
 
 	if (attackerPlayer) {
 		const auto &item = attackerPlayer->getWeapon();
-		damage = applyImbuementElementalDamage(attackerPlayer, item, damage);
 		g_events().eventPlayerOnCombat(attackerPlayer, target, item, damage);
 		g_callbacks().executeCallback(EventCallback_t::playerOnCombat, attackerPlayer, target, item, std::ref(damage));
 
@@ -873,6 +872,9 @@ void Combat::CombatHealthFunc(const std::shared_ptr<Creature> &caster, const std
 
 		damage.damageMultiplier += attackerPlayer->wheel().getMajorStatConditional("Divine Empowerment", WheelMajor_t::DAMAGE);
 		g_logger().trace("Wheel Divine Empowerment damage multiplier {}", damage.damageMultiplier);
+
+		// After the hit's own modifiers (PvP halving, buffs) so the extra elements scale with them
+		applyImbuementElementalDamage(attackerPlayer, item, target, damage);
 	}
 
 	if (g_game().combatBlockHit(damage, caster, target, params.blockedByShield, params.blockedByArmor, params.itemId != 0)) {
@@ -939,46 +941,52 @@ void Combat::CombatHealthFunc(const std::shared_ptr<Creature> &caster, const std
 	}
 }
 
-CombatDamage Combat::applyImbuementElementalDamage(const std::shared_ptr<Player> &attackerPlayer, std::shared_ptr<Item> item, CombatDamage damage) {
-	if (!item) {
-		return damage;
+// Each elemental damage imbuement on the weapon adds its own extra hit of that element instead of converting the
+// physical damage: hit damage * percent * (1 + magic level / 100). Every element is a separate packet that ignores
+// armor and shield like a secondary element, but still goes through the target's immunities and resistances.
+// Packets are extensions, so they never trigger leech, charms, perfect shot or reflection a second time.
+void Combat::applyImbuementElementalDamage(const std::shared_ptr<Player> &attackerPlayer, std::shared_ptr<Item> item, const std::shared_ptr<Creature> &target, const CombatDamage &damage) {
+	if (!attackerPlayer || !item || !target || damage.extension || damage.primary.type == COMBAT_HEALING || damage.primary.value >= 0) {
+		return;
 	}
 
-	if (item->getWeaponType() == WEAPON_AMMO && attackerPlayer && attackerPlayer->getInventoryItem(CONST_SLOT_LEFT) != nullptr) {
+	if (item->getWeaponType() == WEAPON_AMMO && attackerPlayer->getInventoryItem(CONST_SLOT_LEFT) != nullptr) {
 		item = attackerPlayer->getInventoryItem(CONST_SLOT_LEFT);
 	}
 
+	const double magicLevelScaling = 1.0 + attackerPlayer->getMagicLevel() * 0.01;
 	for (uint8_t slotid = 0; slotid < item->getImbuementSlot(); slotid++) {
+		if (target->getHealth() <= 0) {
+			return;
+		}
+
 		ImbuementInfo imbuementInfo;
 		if (!item->getImbuementInfo(slotid, &imbuementInfo)) {
 			continue;
 		}
 
-		if (imbuementInfo.imbuement->combatType == COMBAT_NONE
-		    || damage.primary.type == COMBAT_HEALING
-		    || damage.secondary.type == COMBAT_HEALING) {
+		const Imbuement* imbuement = imbuementInfo.imbuement;
+		if (imbuement->combatType == COMBAT_NONE || imbuement->elementDamage <= 0) {
 			continue;
 		}
 
-		if (damage.primary.type != COMBAT_PHYSICALDAMAGE) {
-			break;
+		CombatDamage extraDamage;
+		extraDamage.origin = damage.origin;
+		extraDamage.extension = true;
+		extraDamage.primary.type = imbuement->combatType;
+		extraDamage.primary.value = static_cast<int32_t>(damage.primary.value * (imbuement->elementDamage / 100.0) * magicLevelScaling);
+		if (extraDamage.primary.value >= 0) {
+			continue;
 		}
 
-		float damagePercent = imbuementInfo.imbuement->elementDamage / 100.0;
-
-		damage.secondary.type = imbuementInfo.imbuement->combatType;
-		damage.secondary.value = damage.primary.value * (damagePercent);
-		damage.primary.value = damage.primary.value * (1 - damagePercent);
-
-		if (imbuementInfo.imbuement->soundEffect != SoundEffect_t::SILENCE) {
-			g_game().sendSingleSoundEffect(item->getPosition(), imbuementInfo.imbuement->soundEffect, item->getHoldingPlayer());
+		if (imbuement->soundEffect != SoundEffect_t::SILENCE) {
+			g_game().sendSingleSoundEffect(item->getPosition(), imbuement->soundEffect, attackerPlayer);
 		}
 
-		// If damage imbuement is set, we can return without checking other slots
-		break;
+		if (!g_game().combatBlockHit(extraDamage, attackerPlayer, target, false, false, false)) {
+			g_game().combatChangeHealth(attackerPlayer, target, extraDamage);
+		}
 	}
-
-	return damage;
 }
 
 void Combat::CombatManaFunc(const std::shared_ptr<Creature> &caster, const std::shared_ptr<Creature> &target, const CombatParams &params, CombatDamage* data) {

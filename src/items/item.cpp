@@ -519,8 +519,8 @@ bool Item::canAddImbuement(uint8_t slot, const std::shared_ptr<Player> &player, 
 		return false;
 	}
 
-	// Checks if the item already has the imbuement category id
-	if (hasImbuementCategoryId(categoryImbuement->id)) {
+	// Checks if the item already has an imbuement of the same type
+	if (hasConflictingImbuement(imbuement)) {
 		g_logger().error("[Item::setImbuement] - An error occurred while player with name {} try to apply imbuement, item already contains imbuement of the same type: {}", player->getName(), imbuement->getName());
 		player->sendImbuementResult("This item already has this imbuement type.");
 		return false;
@@ -529,15 +529,94 @@ bool Item::canAddImbuement(uint8_t slot, const std::shared_ptr<Player> &player, 
 	return true;
 }
 
-bool Item::hasImbuementCategoryId(uint16_t categoryId) const {
+// Allowed imbuement categories are decided by equipment slot, not by the per-item list in items.xml.
+// Items still need an imbuementslot in items.xml to be imbuable at all; every tier is allowed.
+bool Item::hasImbuementType(ImbuementTypes_t imbuementType, [[maybe_unused]] uint16_t imbuementTier) const {
+	const ItemType &itemType = items[id];
+	if (itemType.imbuementSlot == 0) {
+		return false;
+	}
+
+	bool isResist = false;
+	switch (imbuementType) {
+		case IMBUEMENT_ELEMENTAL_PROTECTION_DEATH:
+		case IMBUEMENT_ELEMENTAL_PROTECTION_EARTH:
+		case IMBUEMENT_ELEMENTAL_PROTECTION_FIRE:
+		case IMBUEMENT_ELEMENTAL_PROTECTION_ICE:
+		case IMBUEMENT_ELEMENTAL_PROTECTION_ENERGY:
+		case IMBUEMENT_ELEMENTAL_PROTECTION_HOLY:
+			isResist = true;
+			break;
+		default:
+			break;
+	}
+
+	// Only the skillboost matching the item's own skill is allowed
+	ImbuementTypes_t itemSkillboost = IMBUEMENT_NONE;
+	switch (itemType.weaponType) {
+		case WEAPON_SWORD:
+			itemSkillboost = IMBUEMENT_SKILLBOOST_SWORD;
+			break;
+		case WEAPON_AXE:
+			itemSkillboost = IMBUEMENT_SKILLBOOST_AXE;
+			break;
+		case WEAPON_CLUB:
+			itemSkillboost = IMBUEMENT_SKILLBOOST_CLUB;
+			break;
+		case WEAPON_DISTANCE:
+		case WEAPON_MISSILE:
+			itemSkillboost = IMBUEMENT_SKILLBOOST_DISTANCE;
+			break;
+		case WEAPON_FIST:
+			itemSkillboost = IMBUEMENT_SKILLBOOST_FIST;
+			break;
+		case WEAPON_WAND:
+			itemSkillboost = IMBUEMENT_SKILLBOOST_MAGIC_LEVEL;
+			break;
+		case WEAPON_SHIELD:
+			itemSkillboost = itemType.isSpellBook() ? IMBUEMENT_SKILLBOOST_MAGIC_LEVEL : IMBUEMENT_SKILLBOOST_SHIELDING;
+			break;
+		default:
+			break;
+	}
+	const bool isSkill = itemSkillboost != IMBUEMENT_NONE && imbuementType == itemSkillboost;
+
+	if (itemType.isWeapon()) {
+		return isSkill
+			|| imbuementType == IMBUEMENT_ELEMENTAL_DAMAGE
+			|| imbuementType == IMBUEMENT_CRITICAL_HIT
+			|| imbuementType == IMBUEMENT_LIFE_LEECH
+			|| imbuementType == IMBUEMENT_MANA_LEECH;
+	}
+
+	if (itemType.weaponType == WEAPON_SHIELD) {
+		return isResist || isSkill;
+	}
+
+	if (itemType.isBoots()) {
+		return isResist || imbuementType == IMBUEMENT_INCREASE_SPEED;
+	}
+
+	if (itemType.isHelmet() || itemType.isArmor() || itemType.isLegs()) {
+		return isResist;
+	}
+
+	return false;
+}
+
+bool Item::hasConflictingImbuement(const Imbuement* imbuement) const {
 	for (uint8_t slotid = 0; slotid < getImbuementSlot(); slotid++) {
 		ImbuementInfo imbuementInfo;
-		if (getImbuementInfo(slotid, &imbuementInfo)) {
-			if (const CategoryImbuement* categoryImbuement = g_imbuements().getCategoryByID(imbuementInfo.imbuement->getCategory());
-			    categoryImbuement->id == categoryId) {
-				return true;
-			}
+		if (!getImbuementInfo(slotid, &imbuementInfo) || imbuementInfo.imbuement->getCategory() != imbuement->getCategory()) {
+			continue;
 		}
+
+		// Elemental damage imbuements share one category but stack per element; only the same element conflicts
+		if (imbuement->getCategory() == IMBUEMENT_ELEMENTAL_DAMAGE && imbuementInfo.imbuement->combatType != imbuement->combatType) {
+			continue;
+		}
+
+		return true;
 	}
 	return false;
 }

@@ -416,7 +416,7 @@ std::vector<Imbuement*> Imbuements::getImbuements(const std::shared_ptr<Player> 
 		}
 
 		// If the item is already imbued with an imbuement, remove the imbuement from the next free slot
-		if (item && item->hasImbuementCategoryId(categoryImbuement->id)) {
+		if (item && item->hasConflictingImbuement(imbuement)) {
 			continue;
 		}
 

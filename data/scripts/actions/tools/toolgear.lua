@@ -19,5 +19,5 @@ function toolGear.onUse(player, item, fromPosition, target, toPosition, isHotkey
 	return true
 end
 
-toolGear:id(9594, 9596, 9598)
+toolGear:id(9594, 9598) -- 9596 is the midas mirror (midas.lua)
 toolGear:register()
