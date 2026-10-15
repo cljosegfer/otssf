@@ -326,6 +326,20 @@ bool Imbuements::loadFromXml(bool /* reloading */) {
 
 						imbuement.capacity = pugi::cast<uint32_t>(attr.value());
 
+					} else if (strcasecmp(effecttype.c_str(), "maxhealthpercent") == 0) {
+						if (!((attr = childNode.attribute("value")))) {
+							g_logger().warn("Missing max health percent for imbuement name {}", imbuement.name);
+							continue;
+						}
+
+						imbuement.maxHealthPercent = static_cast<uint8_t>(std::min<uint32_t>(100, pugi::cast<uint32_t>(attr.value())));
+					} else if (strcasecmp(effecttype.c_str(), "maxmanapercent") == 0) {
+						if (!((attr = childNode.attribute("value")))) {
+							g_logger().warn("Missing max mana percent for imbuement name {}", imbuement.name);
+							continue;
+						}
+
+						imbuement.maxManaPercent = static_cast<uint8_t>(std::min<uint32_t>(100, pugi::cast<uint32_t>(attr.value())));
 					} else if (strcasecmp(effecttype.c_str(), "paralysis") == 0 || strcasecmp(effecttype.c_str(), "vibrancy") == 0) {
 						/////////Imbuement Vibrancy/////////
 						// Accept both 'chance' and 'value' as percent (0-100)

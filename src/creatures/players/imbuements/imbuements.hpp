@@ -107,6 +107,9 @@ public:
 	int32_t skills[SKILL_LAST + 1] = {};
 	int32_t speed = 0;
 	uint32_t capacity = 0;
+	// Percent of the player's base max health/mana (level and vocation), applied live by Player::getMaxHealth/getMaxMana
+	uint8_t maxHealthPercent = 0;
+	uint8_t maxManaPercent = 0;
 
 	/////////Imbuement Vibrancy/////////
 	// Chance (0-100) to remove paralysis when a paralysis condition would be applied

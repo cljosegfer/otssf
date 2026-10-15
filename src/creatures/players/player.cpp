@@ -1270,7 +1270,10 @@ void Player::addSkillAdvance(skills_t skill, uint64_t count) {
 
 void Player::setVarStats(stats_t stat, int32_t modifier) {
 	varStats[stat] += modifier;
+	onMaxStatChanged(stat);
+}
 
+void Player::onMaxStatChanged(stats_t stat) {
 	switch (stat) {
 		case STAT_MAXHITPOINTS: {
 			if (getHealth() > getMaxHealth()) {
@@ -3339,6 +3342,19 @@ void Player::addItemImbuementStats(const Imbuement* imbuement) {
 		bonusCapacity = (capacity * imbuement->capacity) / 100;
 	}
 
+	// Add imbuement max health/mana percent
+	if (imbuement->maxHealthPercent != 0) {
+		requestUpdate = true;
+		imbuementMaxHealthPercent += imbuement->maxHealthPercent;
+		onMaxStatChanged(STAT_MAXHITPOINTS);
+	}
+
+	if (imbuement->maxManaPercent != 0) {
+		requestUpdate = true;
+		imbuementMaxManaPercent += imbuement->maxManaPercent;
+		onMaxStatChanged(STAT_MAXMANAPOINTS);
+	}
+
 	if (requestUpdate) {
 		sendStats();
 		sendSkills();
@@ -3376,6 +3392,19 @@ void Player::removeItemImbuementStats(const Imbuement* imbuement) {
 	if (imbuement->capacity != 0) {
 		requestUpdate = true;
 		bonusCapacity = 0;
+	}
+
+	// Remove imbuement max health/mana percent
+	if (imbuement->maxHealthPercent != 0) {
+		requestUpdate = true;
+		imbuementMaxHealthPercent -= imbuement->maxHealthPercent;
+		onMaxStatChanged(STAT_MAXHITPOINTS);
+	}
+
+	if (imbuement->maxManaPercent != 0) {
+		requestUpdate = true;
+		imbuementMaxManaPercent -= imbuement->maxManaPercent;
+		onMaxStatChanged(STAT_MAXMANAPOINTS);
 	}
 
 	if (requestUpdate) {
@@ -7474,11 +7503,13 @@ uint32_t Player::getLoyaltyMagicLevel() const {
 }
 
 int32_t Player::getMaxHealth() const {
-	return std::max<int32_t>(1, healthMax + varStats[STAT_MAXHITPOINTS] + m_wheelPlayer.getStat(WheelStat_t::HEALTH));
+	const auto imbuementHealth = static_cast<int32_t>(static_cast<int64_t>(healthMax) * imbuementMaxHealthPercent / 100);
+	return std::max<int32_t>(1, healthMax + imbuementHealth + varStats[STAT_MAXHITPOINTS] + m_wheelPlayer.getStat(WheelStat_t::HEALTH));
 }
 
 uint32_t Player::getMaxMana() const {
-	return std::max<int32_t>(0, manaMax + varStats[STAT_MAXMANAPOINTS] + m_wheelPlayer.getStat(WheelStat_t::MANA));
+	const auto imbuementMana = static_cast<int32_t>(static_cast<int64_t>(manaMax) * imbuementMaxManaPercent / 100);
+	return std::max<int32_t>(0, manaMax + imbuementMana + varStats[STAT_MAXMANAPOINTS] + m_wheelPlayer.getStat(WheelStat_t::MANA));
 }
 
 bool Player::hasExtraSwing() {

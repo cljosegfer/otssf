@@ -1806,6 +1806,9 @@ private:
 	uint32_t manaMax = 0;
 	int32_t varSkills[SKILL_LAST + 1] = {};
 	int32_t varStats[STAT_LAST + 1] = {};
+	// Sum of equipped imbuement bonuses, in percent of the base max health/mana
+	int32_t imbuementMaxHealthPercent = 0;
+	int32_t imbuementMaxManaPercent = 0;
 	int32_t shopCallback = -1;
 	int32_t MessageBufferCount = 0;
 	int32_t bloodHitCount = 0;
@@ -1917,6 +1920,8 @@ private:
 		return std::max<uint16_t>(PLAYER_MIN_SPEED, std::min<uint16_t>(maxStepSpeed, getSpeed()));
 	}
 	void updateBaseSpeed();
+	// Clamps current health/mana to a changed maximum and refreshes it for spectators
+	void onMaxStatChanged(stats_t stat);
 
 	bool isPromoted() const;
 

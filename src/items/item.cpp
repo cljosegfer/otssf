@@ -538,6 +538,7 @@ bool Item::hasImbuementType(ImbuementTypes_t imbuementType, [[maybe_unused]] uin
 	}
 
 	bool isResist = false;
+	bool isMaxHealthOrMana = false;
 	switch (imbuementType) {
 		case IMBUEMENT_ELEMENTAL_PROTECTION_DEATH:
 		case IMBUEMENT_ELEMENTAL_PROTECTION_EARTH:
@@ -546,6 +547,10 @@ bool Item::hasImbuementType(ImbuementTypes_t imbuementType, [[maybe_unused]] uin
 		case IMBUEMENT_ELEMENTAL_PROTECTION_ENERGY:
 		case IMBUEMENT_ELEMENTAL_PROTECTION_HOLY:
 			isResist = true;
+			break;
+		case IMBUEMENT_INCREASE_HEALTH:
+		case IMBUEMENT_INCREASE_MANA:
+			isMaxHealthOrMana = true;
 			break;
 		default:
 			break;
@@ -590,15 +595,15 @@ bool Item::hasImbuementType(ImbuementTypes_t imbuementType, [[maybe_unused]] uin
 	}
 
 	if (itemType.weaponType == WEAPON_SHIELD) {
-		return isResist || isSkill;
+		return isResist || isSkill || isMaxHealthOrMana;
 	}
 
 	if (itemType.isBoots()) {
-		return isResist || imbuementType == IMBUEMENT_INCREASE_SPEED;
+		return isResist || isMaxHealthOrMana || imbuementType == IMBUEMENT_INCREASE_SPEED;
 	}
 
 	if (itemType.isHelmet() || itemType.isArmor() || itemType.isLegs()) {
-		return isResist;
+		return isResist || isMaxHealthOrMana;
 	}
 
 	return false;
