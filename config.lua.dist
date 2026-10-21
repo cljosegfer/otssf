@@ -585,6 +585,15 @@ rateManaRegenSpeed = 1.0
 rateSoulRegen = 1.0
 rateSoulRegenSpeed = 1.0
 
+-- Skill-scaled recovery, in percent added per skill level (0 disables)
+-- Health scales with the receiving player's shielding and mana with their magic level
+-- Regen: natural (food) regeneration
+-- Healing/mana restore: potions, healing spells and runes, and heal-over-time buffs (not leech)
+healthRegenPerShielding = 10.0
+manaRegenPerMagicLevel = 10.0
+healingPerShielding = 1.0
+manaRestorePerMagicLevel = 1.0
+
 rateSpellCooldown = 1.0
 rateAttackSpeed = 1.0
 rateOfflineTrainingSpeed = rateAttackSpeed

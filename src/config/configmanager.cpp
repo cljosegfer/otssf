@@ -178,7 +178,11 @@ bool ConfigManager::load() {
 	loadFloatConfig(L, COMBAT_CHAIN_SKILL_FORMULA_FIST, "combatChainSkillFormulaFist", 1.1);
 	loadFloatConfig(L, FORGE_AMOUNT_MULTIPLIER, "forgeAmountMultiplier", 3.0);
 	loadFloatConfig(L, HAZARD_EXP_BONUS_MULTIPLIER, "hazardExpBonusMultiplier", 2.0);
+	loadFloatConfig(L, HEALING_PER_SHIELDING, "healingPerShielding", 1.0);
+	loadFloatConfig(L, HEALTH_REGEN_PER_SHIELDING, "healthRegenPerShielding", 10.0);
 	loadFloatConfig(L, LOYALTY_BONUS_PERCENTAGE_MULTIPLIER, "loyaltyBonusPercentageMultiplier", 1.0);
+	loadFloatConfig(L, MANA_REGEN_PER_MAGIC_LEVEL, "manaRegenPerMagicLevel", 10.0);
+	loadFloatConfig(L, MANA_RESTORE_PER_MAGIC_LEVEL, "manaRestorePerMagicLevel", 1.0);
 	loadFloatConfig(L, MOMENTUM_CHANCE_FORMULA_A, "momentumChanceFormulaA", 0.05);
 	loadFloatConfig(L, MOMENTUM_CHANCE_FORMULA_B, "momentumChanceFormulaB", 1.9);
 	loadFloatConfig(L, MOMENTUM_CHANCE_FORMULA_C, "momentumChanceFormulaC", 0.05);

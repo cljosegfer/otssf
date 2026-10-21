@@ -233,6 +233,10 @@ public:
 	bool unserializeProp(ConditionAttr_t attr, PropStream &propStream) override;
 
 private:
+	// Gain per tick after the player's skill bonus: shielding for health, magic level for mana
+	uint32_t getHealthGain(const std::shared_ptr<Player> &player);
+	uint32_t getManaGain(const std::shared_ptr<Player> &player);
+
 	uint32_t internalHealthTicks = 0;
 	uint32_t internalManaTicks = 0;
 
@@ -240,6 +244,9 @@ private:
 	uint32_t manaTicks = 1000;
 	uint32_t healthGain = 0;
 	uint32_t manaGain = 0;
+	// Fractions of the scaled gains, carried over to the next tick
+	double healthGainRemainder = 0;
+	double manaGainRemainder = 0;
 };
 
 class ConditionManaShield final : public Condition {

@@ -135,6 +135,19 @@ namespace {
 
 		return false;
 	}
+
+	// Carries the fraction over to the next tick, so small gains like 1 hp keep their scaled average
+	uint32_t scaleRegenerationGain(uint32_t gain, double multiplier, double &remainder) {
+		// Gains above INT32_MAX are wrapped negative values (damage); leave them unscaled
+		if (gain == 0 || gain > static_cast<uint32_t>(std::numeric_limits<int32_t>::max())) {
+			return gain;
+		}
+
+		const double scaledGain = std::min(gain * multiplier + remainder, static_cast<double>(std::numeric_limits<int32_t>::max()));
+		const auto wholeGain = static_cast<uint32_t>(scaledGain);
+		remainder = scaledGain - wholeGain;
+		return wholeGain;
+	}
 } // namespace
 
 /**
@@ -1502,11 +1515,12 @@ bool ConditionRegeneration::executeCondition(const std::shared_ptr<Creature> &cr
 		if (internalHealthTicks >= getHealthTicks(creature)) {
 			internalHealthTicks = 0;
 
+			const auto gain = getHealthGain(player);
 			int32_t realHealthGain = creature->getHealth();
 			if (creature->getZoneType() == ZONE_PROTECTION && dailyStreak >= DAILY_REWARD_DOUBLE_HP_REGENERATION) {
-				creature->changeHealth(healthGain * 2); // Double regen from daily reward
+				creature->changeHealth(gain * 2); // Double regen from daily reward
 			} else {
-				creature->changeHealth(healthGain);
+				creature->changeHealth(gain);
 			}
 			realHealthGain = creature->getHealth() - realHealthGain;
 
@@ -1537,15 +1551,35 @@ bool ConditionRegeneration::executeCondition(const std::shared_ptr<Creature> &cr
 	if (creature->getZoneType() != ZONE_PROTECTION || dailyStreak >= DAILY_REWARD_MP_REGENERATION) {
 		if (internalManaTicks >= getManaTicks(creature)) {
 			internalManaTicks = 0;
+			const auto gain = getManaGain(player);
 			if (creature->getZoneType() == ZONE_PROTECTION && dailyStreak >= DAILY_REWARD_DOUBLE_MP_REGENERATION) {
-				creature->changeMana(manaGain * 2); // Double regen from daily reward
+				creature->changeMana(gain * 2); // Double regen from daily reward
 			} else {
-				creature->changeMana(manaGain);
+				creature->changeMana(gain);
 			}
 		}
 	}
 
 	return ConditionGeneric::executeCondition(creature, interval);
+}
+
+// Natural (food) regeneration uses the regen rates, heal-over-time buffs (Recovery, party spells) the healing rates
+uint32_t ConditionRegeneration::getHealthGain(const std::shared_ptr<Player> &player) {
+	if (!player || (id != CONDITIONID_DEFAULT && !isBuff)) {
+		return healthGain;
+	}
+
+	const auto percentPerLevel = g_configManager().getFloat(id == CONDITIONID_DEFAULT ? HEALTH_REGEN_PER_SHIELDING : HEALING_PER_SHIELDING);
+	return scaleRegenerationGain(healthGain, player->getRecoveryMultiplier(SKILL_SHIELD, percentPerLevel), healthGainRemainder);
+}
+
+uint32_t ConditionRegeneration::getManaGain(const std::shared_ptr<Player> &player) {
+	if (!player || (id != CONDITIONID_DEFAULT && !isBuff)) {
+		return manaGain;
+	}
+
+	const auto percentPerLevel = g_configManager().getFloat(id == CONDITIONID_DEFAULT ? MANA_REGEN_PER_MAGIC_LEVEL : MANA_RESTORE_PER_MAGIC_LEVEL);
+	return scaleRegenerationGain(manaGain, player->getRecoveryMultiplier(SKILL_MAGLEVEL, percentPerLevel), manaGainRemainder);
 }
 
 bool ConditionRegeneration::setParam(ConditionParam_t param, int32_t value) {

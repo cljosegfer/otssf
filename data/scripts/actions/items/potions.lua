@@ -90,8 +90,10 @@ function flaskPotion.onUse(player, item, fromPosition, target, toPosition, isHot
 			doTargetCombatHealth(player, target, COMBAT_HEALING, potion.health[1], potion.health[2], CONST_ME_MAGIC_BLUE)
 		end
 
+		-- Health potions scale with shielding in the source (healingPerShielding); mana potions scale with magic level here
 		if potion.mana then
-			doTargetCombatMana(0, target, potion.mana[1], potion.mana[2], CONST_ME_MAGIC_BLUE)
+			local manaMultiplier = math.max(0, 1 + target:getMagicLevel() * configManager.getFloat(configKeys.MANA_RESTORE_PER_MAGIC_LEVEL) / 100)
+			doTargetCombatMana(0, target, math.floor(potion.mana[1] * manaMultiplier), math.floor(potion.mana[2] * manaMultiplier), CONST_ME_MAGIC_BLUE)
 		end
 
 		if potion.combat then

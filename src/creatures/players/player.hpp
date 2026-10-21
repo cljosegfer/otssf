@@ -1222,6 +1222,8 @@ public:
 	bool hasLearnedInstantSpell(const std::string &spellName) const;
 
 	void updateRegeneration() const;
+	// Multiplier for health/mana the player recovers: each level of skill (shielding, magic level) adds percentPerLevel percent
+	double getRecoveryMultiplier(skills_t skill, float percentPerLevel) const;
 
 	void setScheduledSaleUpdate(bool scheduled);
 

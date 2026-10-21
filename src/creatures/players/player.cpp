@@ -3180,6 +3180,11 @@ void Player::updateRegeneration() const {
 	}
 }
 
+double Player::getRecoveryMultiplier(skills_t skill, float percentPerLevel) const {
+	// A negative rate must not turn recovery into damage
+	return std::max(0.0, 1.0 + getSkillLevel(skill) * static_cast<double>(percentPerLevel) / 100.0);
+}
+
 void Player::setScheduledSaleUpdate(bool scheduled) {
 	scheduledSaleUpdate = scheduled;
 }
