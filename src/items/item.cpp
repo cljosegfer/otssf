@@ -587,8 +587,9 @@ bool Item::hasImbuementType(ImbuementTypes_t imbuementType, [[maybe_unused]] uin
 	const bool isSkill = itemSkillboost != IMBUEMENT_NONE && imbuementType == itemSkillboost;
 
 	if (itemType.isWeapon()) {
+		// Elemental damage only triggers on physical hits, which wands never deal
 		return isSkill
-			|| imbuementType == IMBUEMENT_ELEMENTAL_DAMAGE
+			|| (imbuementType == IMBUEMENT_ELEMENTAL_DAMAGE && !itemType.isWand())
 			|| imbuementType == IMBUEMENT_CRITICAL_HIT
 			|| imbuementType == IMBUEMENT_LIFE_LEECH
 			|| imbuementType == IMBUEMENT_MANA_LEECH;

@@ -843,6 +843,10 @@ void Combat::CombatHealthFunc(const std::shared_ptr<Creature> &caster, const std
 
 			if (targetPlayer) {
 				damage.primary.value *= targetPlayer->getBuff(BUFF_HEALINGRECEIVED) / 100.;
+
+				// Potions, healing spells and runes heal more the higher the receiver's shielding
+				const auto shieldingMultiplier = targetPlayer->getRecoveryMultiplier(SKILL_SHIELD, g_configManager().getFloat(HEALING_PER_SHIELDING));
+				damage.primary.value = static_cast<int32_t>(std::min<double>(damage.primary.value * shieldingMultiplier, std::numeric_limits<int32_t>::max()));
 			}
 
 			if (params.origin != ORIGIN_HARMONY && attackerPlayer->getVirtue() == Virtue_t::Sustain && attackerPlayer->getPlayerVocationEnum() == VOCATION_MONK_CIP) {
@@ -942,11 +946,13 @@ void Combat::CombatHealthFunc(const std::shared_ptr<Creature> &caster, const std
 }
 
 // Each elemental damage imbuement on the weapon adds its own extra hit of that element instead of converting the
-// physical damage: hit damage * percent * (1 + magic level / 100). Every element is a separate packet that ignores
-// armor and shield like a secondary element, but still goes through the target's immunities and resistances.
-// Packets are extensions, so they never trigger leech, charms, perfect shot or reflection a second time.
+// physical damage: hit damage * percent * (1 + magic level / 100). Only physical hits (auto attacks, physical spells
+// and runes) trigger it; elemental spells, runes and wand attacks are left to crit.
+// Every element is a separate packet that ignores armor and shield like a secondary element, but still goes through
+// the target's immunities and resistances. Packets are extensions, so they never trigger leech, charms, perfect shot
+// or reflection a second time.
 void Combat::applyImbuementElementalDamage(const std::shared_ptr<Player> &attackerPlayer, std::shared_ptr<Item> item, const std::shared_ptr<Creature> &target, const CombatDamage &damage) {
-	if (!attackerPlayer || !item || !target || damage.extension || damage.primary.type == COMBAT_HEALING || damage.primary.value >= 0) {
+	if (!attackerPlayer || !item || !target || damage.extension || damage.primary.type != COMBAT_PHYSICALDAMAGE || damage.primary.value >= 0) {
 		return;
 	}
 
