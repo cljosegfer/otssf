@@ -457,7 +457,7 @@ ReturnValue Combat::canDoCombat(const std::shared_ptr<Creature> &attacker, const
 		if (tile->hasProperty(CONST_PROP_BLOCKPROJECTILE)) {
 			return RETURNVALUE_NOTENOUGHROOM;
 		}
-		if (targetPlayer && tile->hasFlag(TILESTATE_PROTECTIONZONE)) {
+		if (targetPlayer && targetPlayer->getZoneType() == ZONE_PROTECTION) {
 			const auto permittedOnPz = targetPlayer->hasPermittedConditionInPZ();
 			return permittedOnPz ? RETURNVALUE_NOERROR : RETURNVALUE_ACTIONNOTPERMITTEDINPROTECTIONZONE;
 		}

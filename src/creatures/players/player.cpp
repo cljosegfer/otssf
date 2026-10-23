@@ -943,8 +943,7 @@ std::unordered_set<PlayerIcon> Player::getClientIcons() {
 		icons.insert(PlayerIcon::RedSwords);
 	}
 
-	const auto &tile = getTile();
-	if (tile && tile->hasFlag(TILESTATE_PROTECTIONZONE)) {
+	if (getZoneType() == ZONE_PROTECTION) {
 		if (icons.size() < 9) {
 			icons.insert(PlayerIcon::Pigeon);
 		}
@@ -2864,6 +2863,36 @@ void Player::openImbuementWindow(ImbuementAction action, const std::shared_ptr<I
 }
 
 // inventory
+
+ZoneType_t Player::getZoneType() {
+	if (paused) {
+		return ZONE_PROTECTION;
+	}
+
+	return Creature::getZoneType();
+}
+
+void Player::setPaused(bool value) {
+	if (paused == value) {
+		return;
+	}
+
+	const auto oldZone = getZoneType();
+	paused = value;
+	const auto newZone = getZoneType();
+	if (newZone == oldZone) {
+		return;
+	}
+
+	// Mirror stepping across a zone border, so we and whoever targets us react as if we had walked.
+	onChangeZone(newZone);
+	const auto &self = getPlayer();
+	for (const auto &spectator : Spectators().find<Creature>(getPosition(), true)) {
+		if (spectator != self && spectator->getAttackedCreature() == self) {
+			spectator->onAttackedCreatureChangeZone(newZone);
+		}
+	}
+}
 
 void Player::onChangeZone(ZoneType_t zone) {
 	if (zone == ZONE_PROTECTION) {

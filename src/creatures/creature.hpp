@@ -378,7 +378,7 @@ public:
 		return outfit == 75 || outfit == 266 || outfit == 302;
 	}
 	bool isInvisible() const;
-	ZoneType_t getZoneType();
+	virtual ZoneType_t getZoneType();
 
 	std::unordered_set<std::shared_ptr<Zone>> getZones();
 

@@ -574,6 +574,12 @@ public:
 	void switchGhostMode() {
 		ghostMode = !ghostMode;
 	}
+	// A paused player is treated as standing in a protection zone wherever they are.
+	bool isPaused() const {
+		return paused;
+	}
+	void setPaused(bool value);
+	ZoneType_t getZoneType() override;
 	uint32_t getLevel() const {
 		return level;
 	}
@@ -1877,6 +1883,7 @@ private:
 	bool inMarket = false;
 	bool wasMounted = false;
 	bool ghostMode = false;
+	bool paused = false;
 	bool pzLocked = false;
 	int64_t pzLockOnlyUntil = 0;
 	uint64_t pzLockEventId = 0;

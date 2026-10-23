@@ -3657,6 +3657,9 @@ function Player:isMonsterPrey(raceId) end
 ---@return boolean
 function Player:isOffline() end
 
+---@return boolean|nil
+function Player:isPaused() end
+
 ---@return boolean
 function Player:isPlayer() end
 
@@ -4052,6 +4055,10 @@ function Player:setMaxMana(maxMana) end
 ---@param skillId number
 ---@return boolean|nil
 function Player:setOfflineTrainingSkill(skillId) end
+
+---@param paused boolean
+---@return boolean|nil
+function Player:setPaused(paused) end
 
 ---@param newPronoun any
 ---@return boolean|nil

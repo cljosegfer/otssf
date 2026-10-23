@@ -6915,6 +6915,12 @@
         "source": "src/lua/functions/creatures/player/player_functions.cpp"
       },
       {
+        "name": "isPaused",
+        "params": [],
+        "return": "boolean|nil",
+        "source": "src/lua/functions/creatures/player/player_functions.cpp"
+      },
+      {
         "name": "isPlayer",
         "params": [],
         "return": "boolean",
@@ -7669,6 +7675,14 @@
         "name": "setOfflineTrainingSkill",
         "params": [
           "skillId: number"
+        ],
+        "return": "boolean|nil",
+        "source": "src/lua/functions/creatures/player/player_functions.cpp"
+      },
+      {
+        "name": "setPaused",
+        "params": [
+          "paused: boolean"
         ],
         "return": "boolean|nil",
         "source": "src/lua/functions/creatures/player/player_functions.cpp"

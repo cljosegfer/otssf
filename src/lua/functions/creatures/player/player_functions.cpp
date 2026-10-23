@@ -362,6 +362,9 @@ void PlayerFunctions::init(lua_State* L) {
 
 	Lua::registerMethod(L, "Player", "setGhostMode", PlayerFunctions::luaPlayerSetGhostMode);
 
+	Lua::registerMethod(L, "Player", "isPaused", PlayerFunctions::luaPlayerIsPaused);
+	Lua::registerMethod(L, "Player", "setPaused", PlayerFunctions::luaPlayerSetPaused);
+
 	Lua::registerMethod(L, "Player", "getContainerId", PlayerFunctions::luaPlayerGetContainerId);
 	Lua::registerMethod(L, "Player", "getContainerById", PlayerFunctions::luaPlayerGetContainerById);
 	Lua::registerMethod(L, "Player", "getContainerIndex", PlayerFunctions::luaPlayerGetContainerIndex);
@@ -3778,6 +3781,31 @@ int PlayerFunctions::luaPlayerSetGhostMode(lua_State* L) {
 			}
 		}
 	}
+	Lua::pushBoolean(L, true);
+	return 1;
+}
+
+int PlayerFunctions::luaPlayerIsPaused(lua_State* L) {
+	// player:isPaused()
+	const auto &player = Lua::getUserdataShared<Player>(L, 1, "Player");
+	if (!player) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	Lua::pushBoolean(L, player->isPaused());
+	return 1;
+}
+
+int PlayerFunctions::luaPlayerSetPaused(lua_State* L) {
+	// player:setPaused(paused)
+	const auto &player = Lua::getUserdataShared<Player>(L, 1, "Player");
+	if (!player) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	player->setPaused(Lua::getBoolean(L, 2));
 	Lua::pushBoolean(L, true);
 	return 1;
 }

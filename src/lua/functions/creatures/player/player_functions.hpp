@@ -271,6 +271,9 @@ class PlayerFunctions {
 
 	static int luaPlayerSetGhostMode(lua_State* L);
 
+	static int luaPlayerIsPaused(lua_State* L);
+	static int luaPlayerSetPaused(lua_State* L);
+
 	static int luaPlayerGetContainerId(lua_State* L);
 	static int luaPlayerGetContainerById(lua_State* L);
 	static int luaPlayerGetContainerIndex(lua_State* L);

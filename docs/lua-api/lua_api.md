@@ -4670,6 +4670,11 @@ C++ Lua binding handlers and registration lines can override inferred signatures
 - Returns: `boolean`
 - Source: `src/lua/functions/creatures/player/player_functions.cpp`
 
+#### `Player:isPaused()`
+
+- Returns: `boolean|nil`
+- Source: `src/lua/functions/creatures/player/player_functions.cpp`
+
 #### `Player:isPlayer()`
 
 - Returns: `boolean`
@@ -5141,6 +5146,11 @@ C++ Lua binding handlers and registration lines can override inferred signatures
 - Source: `src/lua/functions/creatures/player/player_functions.cpp`
 
 #### `Player:setOfflineTrainingSkill(skillId: number)`
+
+- Returns: `boolean|nil`
+- Source: `src/lua/functions/creatures/player/player_functions.cpp`
+
+#### `Player:setPaused(paused: boolean)`
 
 - Returns: `boolean|nil`
 - Source: `src/lua/functions/creatures/player/player_functions.cpp`
