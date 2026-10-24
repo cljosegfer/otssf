@@ -278,6 +278,20 @@ void Items::loadFromProtobuf() {
 	items.shrink_to_fit();
 }
 
+// Extra imbuement slots granted by equipment slot, added on top of the items.xml value
+static uint8_t getBonusImbuementSlots(const ItemType &itemType) {
+	if (itemType.isWeapon()) {
+		// Throwables are stackable and consumed, so they stay unimbuable
+		return itemType.weaponType == WEAPON_MISSILE ? 0 : 2;
+	}
+
+	if (itemType.weaponType == WEAPON_SHIELD || itemType.isArmor() || itemType.isHelmet() || itemType.isLegs() || itemType.isBoots()) {
+		return 1;
+	}
+
+	return 0;
+}
+
 bool Items::loadFromXml() {
 	pugi::xml_document doc;
 	auto folder = g_configManager().getString(CORE_DIRECTORY) + "/items/items.xml";
@@ -311,6 +325,14 @@ bool Items::loadFromXml() {
 		const auto toId = pugi::cast<uint16_t>(toIdAttribute.value());
 		while (id <= toId) {
 			parseItemNode(itemNode, id++);
+		}
+	}
+
+	// The imbuing window shows at most 3 slots
+	constexpr uint8_t maxImbuementSlots = 3;
+	for (auto &itemType : items) {
+		if (const uint8_t bonusSlots = getBonusImbuementSlots(itemType); bonusSlots > 0) {
+			itemType.imbuementSlot = std::min<uint8_t>(maxImbuementSlots, itemType.imbuementSlot + bonusSlots);
 		}
 	}
 	return true;
