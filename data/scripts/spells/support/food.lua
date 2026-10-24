@@ -29,7 +29,7 @@ spell:id(42)
 spell:cooldown(2 * 1000)
 spell:groupCooldown(2 * 1000)
 spell:level(14)
-spell:mana(12)
+spell:mana(0)
 spell:soul(1)
 spell:isAggressive(false)
 

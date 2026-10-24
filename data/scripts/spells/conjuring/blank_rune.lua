@@ -11,7 +11,7 @@ spell:group("support")
 spell:cooldown(2 * 1000)
 spell:groupCooldown(2 * 1000)
 spell:level(20)
-spell:mana(50)
+spell:mana(0)
 spell:soul(1)
 
 spell:register()
