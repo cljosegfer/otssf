@@ -1,3 +1,6 @@
+-- Minimum drop chance (out of 100000) for any loot item with a non-zero chance
+MIN_LOOT_CHANCE = 1000
+
 -- return a dictionary of itemId => { count, gut }
 ---@param config { factor: number, gut: boolean, filter?: fun(itemType: ItemType, unique: boolean): boolean }
 ---@return LootItems
@@ -31,6 +34,9 @@ function MonsterType:generateLootRoll(config, resultTable, player)
 		end
 
 		local chance = item.chance
+		if chance > 0 then
+			chance = math.max(chance, MIN_LOOT_CHANCE)
+		end
 		if SoulWarQuest and iType:getId() == SoulWarQuest.bagYouDesireItemId then
 			result[item.itemId].chance = self:calculateBagYouDesireChance(player, chance)
 			logger.debug("Final chance for bag you desire: {}, original chance: {}", result[item.itemId].chance, chance)
