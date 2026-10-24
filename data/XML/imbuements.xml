@@ -1,7 +1,7 @@
 <imbuements>
-	<base id="1" name="Basic" price="0" protectionPrice="10000" percent="90" removecost="0" duration="72000" />
-	<base id="2" name="Intricate" price="0" protectionPrice="30000" percent="70" removecost="0" duration="72000" />
-	<base id="3" name="Powerful" price="0" protectionPrice="50000" percent="50" removecost="0" duration="72000" />
+	<base id="1" name="Basic" price="0" protectionPrice="10000" percent="90" removecost="0" duration="7200" />
+	<base id="2" name="Intricate" price="0" protectionPrice="30000" percent="70" removecost="0" duration="7200" />
+	<base id="3" name="Powerful" price="0" protectionPrice="50000" percent="50" removecost="0" duration="7200" />
 
 	<!-- Category Names -->
 	<category id="0" name="Elemental Damage" agressive="1" />
