@@ -8613,8 +8613,10 @@ bool Game::combatChangeHealth(const std::shared_ptr<Creature> &attacker, const s
 		std::stringstream ss;
 
 		if (target->hasCondition(CONDITION_MANASHIELD) && damage.primary.type != COMBAT_UNDEFINEDDAMAGE) {
-			int32_t manaDamage = std::min<int32_t>(target->getMana(), healthChange);
 			uint32_t manaShield = target->getManaShield();
+			// Point-based shields absorb without spending mana; unlimited shields (energy ring) still drain mana
+			const bool drainsMana = manaShield == 0;
+			int32_t manaDamage = drainsMana ? std::min<int32_t>(target->getMana(), healthChange) : healthChange;
 			if (manaShield > 0) {
 				if (manaShield > manaDamage) {
 					target->setManaShield(manaShield - manaDamage);
@@ -8636,14 +8638,14 @@ bool Game::combatChangeHealth(const std::shared_ptr<Creature> &attacker, const s
 						if (healthChange == 0) {
 							return true;
 						}
-						manaDamage = std::min<int32_t>(target->getMana(), healthChange);
+						manaDamage = drainsMana ? std::min<int32_t>(target->getMana(), healthChange) : std::min<int32_t>(manaDamage, healthChange);
 					}
 				}
 
-				target->drainMana(attacker, manaDamage);
-
-				if (target->getMana() == 0 && manaShield > 0) {
-					target->removeCondition(CONDITION_MANASHIELD);
+				if (drainsMana) {
+					target->drainMana(attacker, manaDamage);
+				} else {
+					target->onAttacked();
 				}
 
 				addMagicEffect(spectators.data(), targetPos, CONST_ME_LOSEENERGY);
@@ -8707,6 +8709,11 @@ bool Game::combatChangeHealth(const std::shared_ptr<Creature> &attacker, const s
 				if (damage.primary.value < 0) {
 					damage.secondary.value = std::max<int32_t>(0, damage.secondary.value + damage.primary.value);
 					damage.primary.value = 0;
+				}
+
+				if (!drainsMana) {
+					// Absorbed damage costs a sixth of it in health, dealt along with the unabsorbed remainder
+					damage.primary.value += manaDamage / 6;
 				}
 
 				if (attackerPlayer) {
