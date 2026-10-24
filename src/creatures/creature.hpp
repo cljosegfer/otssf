@@ -42,7 +42,7 @@ using CreatureEventList = std::list<std::shared_ptr<CreatureEvent>>;
 
 static constexpr uint8_t WALK_TARGET_NEARBY_EXTRA_COST = 2;
 static constexpr uint8_t WALK_FLOOR_CHANGE_EXTRA_COST = 2;
-static constexpr uint8_t WALK_DIAGONAL_EXTRA_COST = 3;
+static constexpr uint8_t WALK_DIAGONAL_EXTRA_COST = 2;
 static constexpr int32_t EVENT_CREATURECOUNT = 10;
 static constexpr int32_t EVENT_CREATURE_THINK_INTERVAL = 1000;
 static constexpr int32_t EVENT_CHECK_CREATURE_INTERVAL = (EVENT_CREATURE_THINK_INTERVAL / EVENT_CREATURECOUNT);
